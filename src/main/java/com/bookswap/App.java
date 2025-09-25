@@ -27,5 +27,6 @@ public class App {
         app.get("/", ctx ->{
             ctx.render("index.ftl");
         });
+
     }
 }
