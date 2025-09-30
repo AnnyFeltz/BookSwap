@@ -1,5 +1,8 @@
 package com.bookswap;
 
+import com.bookswap.controllers.AuthenticationController;
+import com.bookswap.controllers.UserController;
+
 import freemarker.template.Configuration;
 import io.javalin.Javalin;
 import io.javalin.http.staticfiles.Location;
@@ -23,6 +26,24 @@ public class App {
                 staticFiles.precompress = false;
             });
         }).start(3030);
+
+        //controllers
+        AuthenticationController authenticationController = new AuthenticationController();
+        UserController userController = new UserController();
+
+        //formularios de autenticação
+        app.get("/register", ctx -> ctx.render("register.ftl"));
+        app.get("/login", ctx -> ctx.render("login.ftl"));
+
+        //rotas post de autenticação
+        app.post("/register", authenticationController::register);
+        app.post("/login", authenticationController::login);
+        app.post("/logout", authenticationController::logout);
+
+        //rotas de perfil
+        app.get("/perfil", userController::verPerfil);
+        app.post("/perfil/update", userController::atualizarPerfil);
+        app.post("/perfil/delete", userController::deletarConta);
 
         app.get("/", ctx ->{
             ctx.render("index.ftl");
