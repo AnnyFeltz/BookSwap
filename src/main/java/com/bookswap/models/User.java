@@ -24,6 +24,10 @@ public class User {
         this.role = role;
     }
 
+    public User() {
+        //construtor vazio pq ele queria mt
+    }
+
     //getters and setters
     public int getId() {
         return id;
