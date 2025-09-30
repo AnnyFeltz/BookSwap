@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meu Perfil - BookSwap</title>
+    <link rel="stylesheet" href="/styles/styles.css">
+
+    <style>
+        * {
+            margin: 0px;
+            padding: 0px;
+        }
+
+        body {
+            background-color: rgb(240, 230, 230);
+            width: 100%;
+            height: 100%;
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .app-header {
+            display: flex;
+            background-color: rgb(131, 131, 131);
+            justify-content: center;
+            align-items: center;
+        }
+
+        .header-title {
+            background-color: orange;
+            color: white;
+            padding: 1vh 2vw;
+            font-size: 3vw;
+        }
+
+        .credits-system {
+            background-color: yellow;
+        }
+
+        .profile-card {
+            display: flex;
+            flex-direction: column;
+            min-width: 50vw;
+            max-width: fit-content;
+            min-height: 60vh;
+            max-height: fit-content;
+            align-items: center;
+            background-color: white;
+            border-radius: 3vh;
+            box-shadow: 0.5vh 0.5vh 2vh 0vh;
+        }
+
+        .profile-pic {
+            background-image: url("f8e830e2-7a3f-4824-832f-6ac92445f6dd.jpg");
+            background-position: center;
+            background-size: contain;
+            width: 20vw;
+            height: 20vh;
+            border-radius: 100%;
+            margin: 3vh 3vw;
+        }
+
+        .user-info-section {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            justify-items: center;
+            align-items: center;
+        }
+
+        .user-details {
+            padding: 3vh 4vw;
+            margin: 3vh 3vw;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .botões {
+            display: flex;
+            justify-content: end;
+            align-items: center;
+            align-self: flex-end;
+        }
+
+        .action-block {
+            margin: 0.5vh 1vw;
+            width: fit-content;
+            height: fit-content;
+        }
+
+        .update-form {
+            display: flex;
+            flex-direction: column;
+            padding: 3vh 4vw;
+        }
+
+        .logout-button-top {
+            background-color: aqua;
+        }
+
+        .logout-button-align {
+            display: flex;
+            flex-direction: column;
+            align-self: flex-start;
+        }
+
+        .credits-system-align {
+            display: flex;
+            flex-direction: column;
+            align-self: flex-end;
+        }
+
+        .btn-update {
+            background-color: cadetblue;
+        }
+
+        .btn-delete {
+            background-color: red;
+        }
+
+        .btn-delete,
+        .btn-update,
+        .logout-button-top,
+        .credits-system {
+            display: block;
+            border: none;
+            padding: 1vh 2vw;
+            border-radius: 0.8vh;
+            margin: 1vh 2vw;
+        }
+
+        .update-form label,
+        input {
+            margin: 0.5vh 0vh 0.5vh 0vh;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="app-header">
+        <span class="header-title">Meu Perfil</span>
+    </div>
+
+    <div class="profile-card">
+        <div style="display: flex; width: 100%; justify-content: space-between;">
+            <form method="POST" action="/logout">
+                <button type="submit" class="logout-button-top">
+                    Logout
+                </button>
+            </form>
+            <div class="credits-system">
+                <span>★</span>
+                <span>150 pts</span>
+            </div>
+        </div>
+
+        <div class="user-info-section">
+            <div class="profile-pic">
+                <img src="/img/f8e830e2-7a3f-4824-832f-6ac92445f6dd.jpg" alt="Ícone de Perfil">
+            </div>
+            <div class="user-details">
+                <h1>${user.nome}!</h1>
+                <p>${user.email}</p>
+            </div>
+        </div>
+
+        <div class="action-block" id="update-form-container" style="display: none;">
+            <form method="POST" action="/perfil/update" class="update-form" id="update-form">
+                <h4 style="text-align: center;">Área de Atualização</h4>
+                <br>
+                <label for="nome">Novo Nome:</label>
+                <input type="text" id="nome" name="nome" placeholder="Seu novo nome">
+
+                <label for="email">Novo E-mail:</label>
+                <input type="email" id="email" name="email" placeholder="Seu novo e-mail">
+
+                <button type="submit" class="btn-update">Salvar Alterações</button>
+            </form>
+        </div>
+
+        <div class="botões">
+            <div class="action-block">
+                <button class="btn-update"
+                    onclick="document.getElementById('update-form-container').style.display='block'; this.parentNode.style.display='none';">
+                    Atualizar Perfil
+                </button>
+            </div>
+
+            <div class="action-block">
+                <form method="POST" action="/perfil/delete"
+                    onsubmit="return confirm('Tem certeza que deseja EXCLUIR sua conta? Esta ação é irreversível.');">
+                    <button type="submit" class="btn-delete">
+                        Excluir Minha Conta
+                    </button>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
