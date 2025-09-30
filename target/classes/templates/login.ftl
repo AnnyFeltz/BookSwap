@@ -3,6 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/styles/styles.css">
   <title>BookSwap - Login</title>
   <style>
     * {
@@ -20,7 +21,6 @@
       justify-content: flex-start;
       min-height: 100vh;
     }
-
     
     .top-bar {
       width: 100%;
@@ -30,6 +30,11 @@
       align-items: center;
       justify-content: center;
       border-radius: 0 0 20px 20px;
+    }
+
+    .top-bar img {
+        width: 100px;
+        height: 100px;
     }
 
     .logo-icon {
@@ -129,7 +134,7 @@
 <body>
 
   <header class="top-bar">
-    <img src="/img/dia-mundial-do-livro.png">
+    <img src="/img/dia-mundial-do-livro.png" alt="logo">
   </header>
 
   <main class="card">
@@ -138,7 +143,7 @@
     </div>
 
     <div class="logo-section">
-      <img src="/img/dia-mundial-do-livro.png">
+      <img src="">
       <h2>BookSwap</h2>
       <p>Ler, Trocar, Repetir</p>
     </div>
