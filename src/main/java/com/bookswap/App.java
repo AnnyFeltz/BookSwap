@@ -21,7 +21,7 @@ public class App {
         Javalin app = Javalin.create(config ->{
             config.staticFiles.add(staticFiles -> {
                 staticFiles.directory = "/public";
-                staticFiles.location = Location.CLASSPATH;
+                staticFiles.location = Location.EXTERNAL;
                 config.fileRenderer(new JavalinFreemarker(cfg));
                 staticFiles.precompress = false;
             });
@@ -30,7 +30,7 @@ public class App {
         //controllers
         AuthenticationController authenticationController = new AuthenticationController();
         UserController userController = new UserController();
-
+        
         //formularios de autenticação
         app.get("/register", ctx -> ctx.render("register.ftl"));
         app.get("/login", ctx -> ctx.render("login.ftl"));
