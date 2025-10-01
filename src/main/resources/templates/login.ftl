@@ -25,15 +25,6 @@
             min-height: 100vh;
         }
 
-        .top-bar {
-            width: 100%;
-            height: 60px;
-            background-color: #948AC9;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 0 0 20px 20px;
-        }
 
         .logo-icon {
             height: 35px;
@@ -42,11 +33,11 @@
 
         .card {
             background-color: #a4cfffff;
-            margin-top: 40px;
+            margin-top: 90px;
             padding: 40px 35px;
             border-radius: 15px;
             width: 90%;
-            max-width: 440px;
+            max-width: 540px;
             box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
             text-align: center;
             position: relative;
