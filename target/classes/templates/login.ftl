@@ -15,7 +15,9 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: #dcf0fdff;
+            background-image: url("/img/BookSwap.jpg");
+            background-size: cover;  
+            background-repeat: no-repeat;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -132,7 +134,7 @@
 <body>
 
     <header class="top-bar">
-        <img src="/img/dia-mundial-do-livro.png" style="width: 100px;">
+        
     </header>
 
     <main class="card">

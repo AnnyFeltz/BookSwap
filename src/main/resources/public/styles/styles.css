@@ -1,11 +1,11 @@
 /* === CONFIGURAÇÕES GLOBAIS E VARIÁVEIS DE COR === */
 :root {
-    --cor-primaria: #005A9C;
+    --cor-primaria: #1d1c4b;
     --cor-secundaria: #007BFF;
     --cor-fundo-transparente: rgba(240, 242, 245, 0.85); /* << NOVO: Fundo principal com leve transparência */
     --cor-surface: #FFFFFF;
     --cor-texto: #333333;
-    --cor-texto-suave: #666666;
+    --cor-texto-suave: #1d1c4b;
     --sombra-card: 0 4px 12px rgba(0, 0, 0, 0.08);
     --sombra-card-hover: 0 6px 16px rgba(0, 0, 0, 0.12);
 }
