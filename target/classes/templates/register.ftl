@@ -130,7 +130,7 @@
 
   
   <header class="top-bar">
-  <img src="/img/dia-mundial-do-livro.png">
+ 
   </header>
 
   

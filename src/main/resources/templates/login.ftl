@@ -132,7 +132,7 @@
 <body>
 
     <header class="top-bar">
-        <img src="/img/dia-mundial-do-livro.png" style="width: 100px;">
+        
     </header>
 
     <main class="card">
