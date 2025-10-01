@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Meu Perfil - BookSwap</title>
-    <link rel="stylesheet" href="/styles/styles.css">
+    <link rel="stylesheet" href="/static/styles/styles.css">
 </head>
 
 <body>
@@ -30,7 +30,7 @@
             </div>
             <div class="user-info-section">
                 <div class="profile-pic">
-                    <img src="/img/duck.jpg" alt="Foto de Perfil">
+                    <img src="/static/img/duck.jpg" alt="Foto de Perfil">
                 </div>
                 <div class="user-details">
                     <h1>${user.nome?html}!</h1>
@@ -83,7 +83,7 @@
                         <!-- Card 1 -->
                         <div class="book-card">
                             <div class="book-cover">
-                                <img src="/img/duna.jpg" alt="Capa do livro Duna">
+                                <img src="/static/img/duna.jpg" alt="Capa do livro Duna">
                                 <div class="bookmark saved"></div>
                             </div>
                             <div class="book-info">
@@ -95,7 +95,7 @@
                         <!-- Card 2 -->
                         <div class="book-card">
                             <div class="book-cover">
-                                <img src="/img/o-programador-pragmatico.jpg"
+                                <img src="/static/img/o-programador-pragmatico.jpg"
                                     alt="Capa do livro O Programador Pragmático">
                                 <div class="bookmark"></div>
                             </div>

@@ -5,7 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Dashboard - BookSwap</title>
-  <link rel="stylesheet" href="/styles/styles.css">
+  <link rel="stylesheet" href="/static/styles/styles.css">
 </head>
 
 <body>
@@ -43,7 +43,7 @@
 
       <div class="book-card">
         <div class="book-cover">
-          <img src="/img/duna.jpg" alt="Capa do livro Duna">
+          <img src="/static/img/duna.jpg" alt="Capa do livro Duna">
           <div class="bookmark saved"></div>
         </div>
         <div class="book-info">
@@ -54,7 +54,7 @@
 
       <div class="book-card">
         <div class="book-cover">
-          <img src="/img/o-programador-pragmatico.jpg" alt="Capa do livro O Programador Pragmático">
+          <img src="/static/img/o-programador-pragmatico.jpg" alt="Capa do livro O Programador Pragmático">
           <div class="bookmark"></div>
         </div>
         <div class="book-info">
@@ -65,7 +65,7 @@
 
       <div class="book-card">
         <div class="book-cover">
-          <img src="/img/sapiens.jpg" alt="Capa do livro Sapiens: Uma Breve História da Humanidade">
+          <img src="/static/img/sapiens.jpg" alt="Capa do livro Sapiens: Uma Breve História da Humanidade">
           <div class="bookmark"></div>
         </div>
         <div class="book-info">
@@ -76,7 +76,7 @@
 
       <div class="book-card">
         <div class="book-cover">
-          <img src="/img/o-senhor-dos-aneis.jpg" alt="Capa do livro O Senhor dos Anéis: A Sociedade do Anel">
+          <img src="/static/img/o-senhor-dos-aneis.jpg" alt="Capa do livro O Senhor dos Anéis: A Sociedade do Anel">
           <div class="bookmark"></div>
         </div>
         <div class="book-info">
@@ -87,7 +87,7 @@
 
       <div class="book-card">
         <div class="book-cover">
-          <img src="/img/arquitetura-limpa.jpg" alt="Capa do livro Arquitetura Limpa">
+          <img src="/static/img/arquitetura-limpa.jpg" alt="Capa do livro Arquitetura Limpa">
           <div class="bookmark saved"></div>
         </div>
         <div class="book-info">
@@ -98,7 +98,7 @@
 
       <div class="book-card">
         <div class="book-cover">
-          <img src="/img/1984.jpg" alt="Capa do livro 1984">
+          <img src="/static/img/1984.jpg" alt="Capa do livro 1984">
           <div class="book-author"></div>
         </div>
         <div class="book-info">
@@ -109,7 +109,7 @@
 
       <div class="book-card">
         <div class="book-cover">
-          <img src="/img/o-poder-do-habito.jpg" alt="Capa do livro O Poder do Hábito">
+          <img src="/static/img/o-poder-do-habito.jpg" alt="Capa do livro O Poder do Hábito">
           <div class="bookmark"></div>
         </div>
         <div class="book-info">
@@ -120,7 +120,7 @@
 
       <div class="book-card">
         <div class="book-cover">
-          <img src="/img/mitologia-nordica.jpg" alt="Capa do livro Mitologia Nórdica">
+          <img src="/static/img/mitologia-nordica.jpg" alt="Capa do livro Mitologia Nórdica">
           <div class="bookmark"></div>
         </div>
         <div class="book-info">
@@ -131,7 +131,7 @@
 
       <div class="book-card">
         <div class="book-cover">
-          <img src="/img/HarryPotter1.jpg" alt="Capa do livro Harry Potter e a Pedra Filosofal">
+          <img src="/static/img/HarryPotter1.jpg" alt="Capa do livro Harry Potter e a Pedra Filosofal">
           <div class="bookmark saved"></div>
         </div>
         <div class="book-info">
@@ -142,7 +142,7 @@
 
       <div class="book-card">
         <div class="book-cover">
-          <img src="/img/A_Menina.jpg" alt="Capa do livro A Menina Do Outro Lado">
+          <img src="/static/img/A_Menina.jpg" alt="Capa do livro A Menina Do Outro Lado">
           <div class="bookmark"></div>
         </div>
         <div class="book-info">
@@ -153,7 +153,7 @@
 
       <div class="book-card">
         <div class="book-cover">
-          <img src="/img/download (2).jpg" alt="Capa do livro Percy Jackson O Ladrão de Raios">
+          <img src="/static/img/download (2).jpg" alt="Capa do livro Percy Jackson O Ladrão de Raios">
           <div class="bookmark"></div>
         </div>
         <div class="book-info">
@@ -164,7 +164,7 @@
 
       <div class="book-card">
         <div class="book-cover">
-          <img src="/img/Trono_Vidro.jpg" alt="Capa do livro Trono de Vidro: Império da Tempestade">
+          <img src="/static/img/Trono_Vidro.jpg" alt="Capa do livro Trono de Vidro: Império da Tempestade">
           <div class="bookmark"></div>
         </div>
         <div class="book-info">
@@ -175,7 +175,7 @@
 
       <div class="book-card">
         <div class="book-cover">
-          <img src="/img/Heartstopper.jpg" alt="Capa do livro Heartstopper">
+          <img src="/static/img/Heartstopper.jpg" alt="Capa do livro Heartstopper">
           <div class="bookmark saved"></div>
         </div>
         <div class="book-info">
@@ -186,7 +186,7 @@
 
       <div class="book-card">
         <div class="book-cover">
-          <img src="/img/Verity.jpg" alt="Capa do livro Verity">
+          <img src="/static/img/Verity.jpg" alt="Capa do livro Verity">
           <div class="bookmark"></div>
         </div>
         <div class="book-info">
@@ -197,7 +197,7 @@
 
       <div class="book-card">
         <div class="book-cover">
-          <img src="/img/Um Encanto Delicado.jpg" alt="Capa do livro Um Encanto Delicado">
+          <img src="/static/img/Um Encanto Delicado.jpg" alt="Capa do livro Um Encanto Delicado">
           <div class="bookmark"></div>
         </div>
         <div class="book-info">
@@ -208,7 +208,7 @@
 
       <div class="book-card">
         <div class="book-cover">
-          <img src="/img/Borboleta.jpg" alt="Capa do livro A Depressão é uma Borboleta Azul">
+          <img src="/static/img/Borboleta.jpg" alt="Capa do livro A Depressão é uma Borboleta Azul">
           <div class="bookmark saved"></div>
         </div>
         <div class="book-info">
@@ -218,7 +218,7 @@
       </div>
       <div class="book-card">
         <div class="book-cover">
-          <img src="/img/duna.jpg" alt="Capa do livro Duna">
+          <img src="/static/img/duna.jpg" alt="Capa do livro Duna">
           <div class="bookmark saved"></div>
         </div>
         <div class="book-info">
@@ -229,7 +229,7 @@
 
       <div class="book-card">
         <div class="book-cover">
-          <img src="/img/o-programador-pragmatico.jpg" alt="Capa do livro O Programador Pragmático">
+          <img src="/static/img/o-programador-pragmatico.jpg" alt="Capa do livro O Programador Pragmático">
           <div class="bookmark"></div>
         </div>
         <div class="book-info">
@@ -240,7 +240,7 @@
 
       <div class="book-card">
         <div class="book-cover">
-          <img src="/img/sapiens.jpg" alt="Capa do livro Sapiens: Uma Breve História da Humanidade">
+          <img src="/static/img/sapiens.jpg" alt="Capa do livro Sapiens: Uma Breve História da Humanidade">
           <div class="bookmark"></div>
         </div>
         <div class="book-info">
@@ -251,7 +251,7 @@
 
       <div class="book-card">
         <div class="book-cover">
-          <img src="/img/o-senhor-dos-aneis.jpg" alt="Capa do livro O Senhor dos Anéis: A Sociedade do Anel">
+          <img src="/static/img/o-senhor-dos-aneis.jpg" alt="Capa do livro O Senhor dos Anéis: A Sociedade do Anel">
           <div class="bookmark"></div>
         </div>
         <div class="book-info">
@@ -262,7 +262,7 @@
 
       <div class="book-card">
         <div class="book-cover">
-          <img src="/img/arquitetura-limpa.jpg" alt="Capa do livro Arquitetura Limpa">
+          <img src="/static/img/arquitetura-limpa.jpg" alt="Capa do livro Arquitetura Limpa">
           <div class="bookmark saved"></div>
         </div>
         <div class="book-info">
@@ -273,7 +273,7 @@
 
       <div class="book-card">
         <div class="book-cover">
-          <img src="/img/1984.jpg" alt="Capa do livro 1984">
+          <img src="/static/img/1984.jpg" alt="Capa do livro 1984">
           <div class="book-author"></div>
         </div>
         <div class="book-info">
@@ -284,7 +284,7 @@
 
       <div class="book-card">
         <div class="book-cover">
-          <img src="/img/o-poder-do-habito.jpg" alt="Capa do livro O Poder do Hábito">
+          <img src="/static/img/o-poder-do-habito.jpg" alt="Capa do livro O Poder do Hábito">
           <div class="bookmark"></div>
         </div>
         <div class="book-info">
@@ -295,7 +295,7 @@
 
       <div class="book-card">
         <div class="book-cover">
-          <img src="/img/mitologia-nordica.jpg" alt="Capa do livro Mitologia Nórdica">
+          <img src="/static/img/mitologia-nordica.jpg" alt="Capa do livro Mitologia Nórdica">
           <div class="bookmark"></div>
         </div>
         <div class="book-info">
@@ -306,7 +306,7 @@
 
       <div class="book-card">
         <div class="book-cover">
-          <img src="/img/HarryPotter1.jpg" alt="Capa do livro Harry Potter e a Pedra Filosofal">
+          <img src="/static/img/HarryPotter1.jpg" alt="Capa do livro Harry Potter e a Pedra Filosofal">
           <div class="bookmark saved"></div>
         </div>
         <div class="book-info">
@@ -317,7 +317,7 @@
 
       <div class="book-card">
         <div class="book-cover">
-          <img src="/img/A_Menina.jpg" alt="Capa do livro A Menina Do Outro Lado">
+          <img src="/static/img/A_Menina.jpg" alt="Capa do livro A Menina Do Outro Lado">
           <div class="bookmark"></div>
         </div>
         <div class="book-info">
@@ -328,7 +328,7 @@
 
       <div class="book-card">
         <div class="book-cover">
-          <img src="/img/download (2).jpg" alt="Capa do livro Percy Jackson O Ladrão de Raios">
+          <img src="/static/img/download (2).jpg" alt="Capa do livro Percy Jackson O Ladrão de Raios">
           <div class="bookmark"></div>
         </div>
         <div class="book-info">
@@ -339,7 +339,7 @@
 
       <div class="book-card">
         <div class="book-cover">
-          <img src="/img/Trono_Vidro.jpg" alt="Capa do livro Trono de Vidro: Império da Tempestade">
+          <img src="/static/img/Trono_Vidro.jpg" alt="Capa do livro Trono de Vidro: Império da Tempestade">
           <div class="bookmark"></div>
         </div>
         <div class="book-info">
@@ -350,7 +350,7 @@
 
       <div class="book-card">
         <div class="book-cover">
-          <img src="/img/Heartstopper.jpg" alt="Capa do livro Heartstopper">
+          <img src="/static/img/Heartstopper.jpg" alt="Capa do livro Heartstopper">
           <div class="bookmark saved"></div>
         </div>
         <div class="book-info">
@@ -361,7 +361,7 @@
 
       <div class="book-card">
         <div class="book-cover">
-          <img src="/img/Verity.jpg" alt="Capa do livro Verity">
+          <img src="/static/img/Verity.jpg" alt="Capa do livro Verity">
           <div class="bookmark"></div>
         </div>
         <div class="book-info">
@@ -372,7 +372,7 @@
 
       <div class="book-card">
         <div class="book-cover">
-          <img src="/img/Um Encanto Delicado.jpg" alt="Capa do livro Um Encanto Delicado">
+          <img src="/static/img/Um Encanto Delicado.jpg" alt="Capa do livro Um Encanto Delicado">
           <div class="bookmark"></div>
         </div>
         <div class="book-info">
@@ -383,7 +383,7 @@
 
       <div class="book-card">
         <div class="book-cover">
-          <img src="/img/Borboleta.jpg" alt="Capa do livro A Depressão é uma Borboleta Azul">
+          <img src="/static/img/Borboleta.jpg" alt="Capa do livro A Depressão é uma Borboleta Azul">
           <div class="bookmark saved"></div>
         </div>
         <div class="book-info">

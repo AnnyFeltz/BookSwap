@@ -5,6 +5,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>BookSwap - Registro</title>
+  <link rel="stylesheet" href="/static/styles/styles.css">
+
   <style>
     * {
       margin: 0;
@@ -14,7 +16,7 @@
 
     body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background-image: url("/img/BookSwap.jpg");
+      background-image: url("/static/img/BookSwap.jpg");
       background-size: cover;  
       background-position: center;
       background-repeat: no-repeat;
@@ -128,7 +130,7 @@
     </div>
 
     <div class="logo-section">
-      <img src="/img/dia-mundial-do-livro.png">
+      <img src="/static/img/dia-mundial-do-livro.png">
       <h2>BookSwap</h2>
       <p>Ler, Trocar, Repetir</p>
     </div>

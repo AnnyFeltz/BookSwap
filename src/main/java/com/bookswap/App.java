@@ -23,27 +23,19 @@ public class App {
                 staticFiles.directory = "/public";
                 staticFiles.location = Location.CLASSPATH;
                 staticFiles.precompress = false;
-                staticFiles.hostedPath = "/";
+                staticFiles.hostedPath = "/static"; 
             });
 
             config.fileRenderer(new JavalinFreemarker(cfg));
         }).start(3030);
 
         app.before(ctx -> {
-            // Ignora requisições para arquivos estáticos (CSS, JS, imagens, etc.)
-            // Se o Javalin encontrou um arquivo estático para a URL, o `matchedPath` será diferente de `path`.
-            // E também verificamos se não é uma requisição de API (que também teria um `matchedPath`).
-            if (!ctx.matchedPath().equals(ctx.path()) && !ctx.matchedPath().equals("/*")) {
-                return;
-            }
-
-            // Permite acesso às páginas de login e registro
             String path = ctx.path();
-            if (path.startsWith("/login") || path.startsWith("/register")) {
+
+            if (path.startsWith("/login") || path.startsWith("/register") || path.startsWith("/static")) {
                 return;
             }
 
-            // Se não for um arquivo estático e nem uma página pública, verifica a sessão
             if (ctx.sessionAttribute("user") == null) {
                 ctx.redirect("/login");
             }
