@@ -1,0 +1,271 @@
+/* === CONFIGURAÇÕES GLOBAIS E VARIÁVEIS DE COR === */
+:root {
+    --cor-primaria: #005A9C;
+    --cor-secundaria: #007BFF;
+    --cor-fundo-transparente: rgba(240, 242, 245, 0.85); /* << NOVO: Fundo principal com leve transparência */
+    --cor-surface: #FFFFFF;
+    --cor-texto: #333333;
+    --cor-texto-suave: #666666;
+    --sombra-card: 0 4px 12px rgba(0, 0, 0, 0.08);
+    --sombra-card-hover: 0 6px 16px rgba(0, 0, 0, 0.12);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    height: 100%;
+    font-family: 'Segoe UI', 'Helvetica Neue', sans-serif;
+    color: var(--cor-texto);
+}
+
+/* === LAYOUT PRINCIPAL (HEADER/MAIN/FOOTER) === */
+body {
+    background-image: url("/img/BookSwap.jpg");
+    background-size: cover; /* << ALTERADO: 'cover' é melhor que '100vw 100vh' para evitar distorção */
+    background-position: center;
+    background-attachment: fixed; /* << NOVO: Mantém o fundo fixo durante a rolagem, criando um efeito de profundidade */
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.site-header {
+    background-color: var(--cor-surface);
+    padding: 15px 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #e0e0e0;
+    z-index: 1000;
+    position: sticky; /* << NOVO: Header fica fixo no topo ao rolar */
+    top: 0;
+}
+
+.site-header h1 {
+    font-size: 1.8em;
+    font-weight: 700;
+    color: var(--cor-primaria);
+}
+
+.site-header nav a {
+    color: var(--cor-texto-suave);
+    text-decoration: none;
+    margin-left: 25px;
+    font-weight: 500;
+    transition: color 0.2s ease;
+}
+
+.site-header nav a:hover {
+    color: var(--cor-primaria);
+}
+
+.site-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 30px 40px;
+    background-color: var(--cor-fundo-transparente); /* << NOVO: Aplica o fundo semi-transparente */
+    backdrop-filter: blur(10px); /* << NOVO: Efeito de vidro fosco, a mágica da harmonia! */
+    -webkit-backdrop-filter: blur(10px); /* Suporte para Safari */
+}
+
+.site-footer {
+    background-color: #222;
+    color: #ccc;
+    text-align: center;
+    padding: 20px;
+    font-size: 0.9em;
+}
+
+/* === NOVO DASHBOARD - DESKTOP FIRST === */
+
+.dashboard-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 30px;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.dashboard-toolbar h2 {
+    font-size: 1.8em;
+    font-weight: 600;
+    margin: 0;
+    color: var(--cor-primaria); /* << ALTERADO: Cor para dar mais destaque */
+}
+
+.search-container {
+    display: flex;
+    gap: 10px;
+}
+
+.search-input {
+    min-width: 300px;
+    padding: 10px 15px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 1em;
+}
+
+.filter-btn {
+    padding: 10px 20px;
+    background-color: var(--cor-surface);
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 1em;
+    font-weight: 500;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* --- GRADE DE LIVROS PARA DESKTOP --- */
+.book-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 25px;
+}
+
+.book-card {
+    background-color: var(--cor-surface);
+    border-radius: 12px;
+    box-shadow: var(--sombra-card);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.book-card:hover {
+    transform: translateY(-5px);
+    box-shadow: var(--sombra-card-hover);
+}
+
+/* Usando a tag <img> como pedaço de código anterior */
+.book-cover {
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+}
+
+.book-cover img {
+    display: block;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 2 / 3;
+    object-fit: cover;
+    background-color: #f0f0f0;
+}
+
+.bookmark {
+    position: absolute;
+    top: -2px;
+    right: 12px;
+    width: 28px;
+    height: 40px;
+    background-color: rgba(0, 0, 0, 0.2);
+    clip-path: polygon(0 0, 100% 0, 100% 100%, 50% 75%, 0 100%);
+    cursor: pointer;
+    transition: background-color 0.2s ease;
+    z-index: 2;
+}
+
+.bookmark:hover {
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.bookmark.saved {
+    background-color: var(--cor-secundaria);
+}
+
+.book-info {
+    padding: 15px;
+    text-align: left;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+.book-title {
+    font-size: 1em;
+    font-weight: 600;
+    color: var(--cor-texto);
+    margin-bottom: 5px;
+}
+
+.book-author {
+    font-size: 0.9em;
+    color: var(--cor-texto-suave);
+    flex-grow: 1;
+    margin-bottom: 10px;
+}
+
+.book-price {
+    font-size: 1.1em;
+    font-weight: bold;
+    color: var(--cor-primaria);
+}
+
+.site-header nav {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+}
+
+.site-header nav form {
+    margin: 0;
+    padding: 0;
+}
+
+
+.logout-button-top {
+    background: none;
+    border: none;
+    padding: 0;
+    
+    color: var(--cor-texto-suave);
+    font-family: inherit;
+    font-size: inherit; 
+    font-weight: 500; 
+
+    cursor: pointer;
+
+    transition: color 0.2s ease;
+}
+
+.logout-button-top:hover {
+    color: var(--cor-primaria);
+}
+
+
+/* === MEDIA QUERIES PARA AJUSTES FINOS === */
+@media (max-width: 768px) {
+    .site-content {
+        padding: 20px;
+        backdrop-filter: blur(5px); /* Reduz o blur em telas menores por performance */
+        -webkit-backdrop-filter: blur(5px);
+    }
+
+    .dashboard-toolbar {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .search-container {
+        flex-direction: column;
+    }
+
+    .search-input {
+        min-width: 100%;
+    }
+
+    .book-grid {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    }
+}
