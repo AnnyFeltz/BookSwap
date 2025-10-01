@@ -10,13 +10,13 @@
 
 
     header.site-header {
-      background-color: #948AC9; /* roxo do topo do register */
+      background-color: #948AC9; 
       color: white;
     }
 
 
     .book-card {
-      background-color: #ffffffff; /* mesmo azul do card do register */
+      background-color: #ffffffff; 
     }
 
     .book-title {
@@ -121,7 +121,7 @@
       <div class="book-card">
         <div class="book-cover">
           <img src="/img/1984.jpg" alt="Capa do livro 1984">
-          <div class="bookmark"></div>
+          <div class="book-author"></div>
         </div>
         <div class="book-info">
           <h3 class="book-title">1984</h3>
@@ -156,7 +156,7 @@
       <div class="book-card">
         <div class="book-cover">
           <img src="/img/HarryPotter1.jpg" alt="Capa do livro Harry Potter e a Pedra Filosofal">
-          <div class="bookmark"></div>
+           <div class="bookmark saved"></div>
         </div>
         <div class="book-info">
           <h3 class="book-title">Harry Potter e a Pedra Filosofal</h3>
@@ -201,7 +201,7 @@
     <div class="book-card">
       <div class="book-cover">
         <img src="/img/Heartstopper.jpg" alt="Capa do livro Heartstopper">
-        <div class="bookmark"></div>
+         <div class="bookmark saved"></div>
       </div>
       <div class="book-info">
         <h3 class="book-title">Heartstopper</h3>
@@ -237,7 +237,7 @@
     <div class="book-card">
       <div class="book-cover">
         <img src="/img/Borboleta.jpg" alt="Capa do livro A Depressão é uma Borboleta Azul">
-        <div class="bookmark"></div>
+         <div class="bookmark saved"></div>
       </div>
       <div class="book-info">
         <h3 class="book-title">A Depressão é uma Borboleta Azul</h3>
