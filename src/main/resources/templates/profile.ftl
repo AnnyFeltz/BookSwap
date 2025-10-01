@@ -6,201 +6,177 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Meu Perfil - BookSwap</title>
     <link rel="stylesheet" href="/styles/styles.css">
-
-    <style>
-        * {
-            margin: 0px;
-            padding: 0px;
-        }
-
-        body {
-            background-color: rgb(240, 230, 230);
-            width: 100%;
-            height: 100%;
-            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .app-header {
-            display: flex;
-            background-color: rgb(131, 131, 131);
-            justify-content: center;
-            align-items: center;
-        }
-
-        .header-title {
-            background-color: orange;
-            color: white;
-            padding: 1vh 2vw;
-            font-size: 3vw;
-        }
-
-        .credits-system {
-            background-color: yellow;
-        }
-
-        .profile-card {
-            display: flex;
-            flex-direction: column;
-            min-width: 50vw;
-            max-width: fit-content;
-            min-height: 60vh;
-            max-height: fit-content;
-            align-items: center;
-            background-color: white;
-            border-radius: 3vh;
-            box-shadow: 0.5vh 0.5vh 2vh 0vh;
-        }
-
-        .profile-pic {
-            background-position: center;
-            background-size: contain;
-            width: 200px;
-            height: 200px;
-            border-radius: 100%;
-            margin: 3vh 3vw;
-        }
-
-        .user-info-section {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            justify-items: center;
-            align-items: center;
-        }
-
-        .user-details {
-            padding: 3vh 4vw;
-            margin: 3vh 3vw;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .botões {
-            display: flex;
-            justify-content: end;
-            align-items: center;
-            align-self: flex-end;
-        }
-
-        .action-block {
-            margin: 0.5vh 1vw;
-            width: fit-content;
-            height: fit-content;
-        }
-
-        .update-form {
-            display: flex;
-            flex-direction: column;
-            padding: 3vh 4vw;
-        }
-
-        .logout-button-top {
-            background-color: aqua;
-        }
-
-        .logout-button-align {
-            display: flex;
-            flex-direction: column;
-            align-self: flex-start;
-        }
-
-        .credits-system-align {
-            display: flex;
-            flex-direction: column;
-            align-self: flex-end;
-        }
-
-        .btn-update {
-            background-color: cadetblue;
-        }
-
-        .btn-delete {
-            background-color: red;
-        }
-
-        .btn-delete,
-        .btn-update,
-        .logout-button-top,
-        .credits-system {
-            display: block;
-            border: none;
-            padding: 1vh 2vw;
-            border-radius: 0.8vh;
-            margin: 1vh 2vw;
-        }
-
-        .update-form label,
-        input {
-            margin: 0.5vh 0vh 0.5vh 0vh;
-        }
-    </style>
 </head>
 
 <body>
 
-    <div class="app-header">
-        <span class="header-title">Meu Perfil</span>
-    </div>
-
-    <div class="profile-card">
-        <div style="display: flex; width: 100%; justify-content: space-between;">
+    <header class="site-header">
+        <h1>BookSwap</h1>
+        <nav>
+            <a href="/">Início</a>
             <form method="POST" action="/logout">
-                <button type="submit" class="logout-button-top">
-                    Logout
-                </button>
+                <button type="submit" class="logout-button-top">Sair</button>
             </form>
-            <div class="credits-system">
-                <span>★</span>
-                <span>150 pts</span>
+        </nav>
+    </header>
+
+    <main class="site-content">
+
+        <!-- CARD DE PERFIL -->
+        <div class="profile-card">
+            <div class="profile-header">
+                <h2>Meu Perfil</h2>
+                <div class="credits-system"><span>★</span><span>150 pts</span></div>
             </div>
-        </div>
-
-        <div class="user-info-section">
-            <div class="profile-pic">
-                <img src="/img/f8e830e2-7a3f-4824-832f-6ac92445f6dd.jpg" alt="Ícone de Perfil">
-            </div>
-            <div class="user-details">
-                <h1>${user.nome}!</h1>
-                <p>${user.email}</p>
-            </div>
-        </div>
-
-        <div class="action-block" id="update-form-container" style="display: none;">
-            <form method="POST" action="/perfil/update" class="update-form" id="update-form">
-                <h4 style="text-align: center;">Área de Atualização</h4>
-                <br>
-                <label for="nome">Novo Nome:</label>
-                <input type="text" id="nome" name="nome" placeholder="Seu novo nome">
-
-                <label for="email">Novo E-mail:</label>
-                <input type="email" id="email" name="email" placeholder="Seu novo e-mail">
-
-                <button type="submit" class="btn-update">Salvar Alterações</button>
-            </form>
-        </div>
-
-        <div class="botões">
-            <div class="action-block">
-                <button class="btn-update"
-                    onclick="document.getElementById('update-form-container').style.display='block'; this.parentNode.style.display='none';">
-                    Atualizar Perfil
-                </button>
+            <div class="user-info-section">
+                <div class="profile-pic">
+                    <img src="/img/duck.jpg" alt="Foto de Perfil">
+                </div>
+                <div class="user-details">
+                    <h1>${user.nome?html}!</h1>
+                    <p>${user.email?html}</p>
+                </div>
             </div>
 
-            <div class="action-block">
+            <!-- CONTROLE DO FORMULÁRIO DE ATUALIZAÇÃO -->
+            <div class="profile-actions">
+                <!-- 1. O botão agora é um LABEL que ativa o checkbox -->
+                <label for="toggle-update" class="btn-secondary">Atualizar Perfil</label>
                 <form method="POST" action="/perfil/delete"
                     onsubmit="return confirm('Tem certeza que deseja EXCLUIR sua conta? Esta ação é irreversível.');">
-                    <button type="submit" class="btn-delete">
-                        Excluir Minha Conta
-                    </button>
+                    <button type="submit" class="btn-danger">Excluir Conta</button>
                 </form>
             </div>
         </div>
-    </div>
+
+        <!-- O formulário e seu controle ficam FORA do card principal, mas próximos no HTML -->
+        <input type="checkbox" id="toggle-update" class="hidden-toggle">
+        <div class="update-form-wrapper">
+            <div class="update-form-container">
+                <form method="POST" action="/perfil/update" class="update-form">
+                    <h4>Área de Atualização</h4>
+                    <label for="nome">Novo Nome:</label>
+                    <input type="text" id="nome" name="nome" placeholder="Seu novo nome">
+                    <label for="email">Novo E-mail:</label>
+                    <input type="email" id="email" name="email" placeholder="Seu novo e-mail">
+                    <button type="submit" class="btn-primary">Salvar Alterações</button>
+                </form>
+            </div>
+        </div>
+
+        <!-- CONTAINER DAS ABAS -->
+        <div class="profile-tabs-container">
+            <!-- 2. Inputs de rádio invisíveis para controlar as abas -->
+            <input type="radio" name="profile-tabs" id="tab1" class="hidden-toggle" checked>
+            <input type="radio" name="profile-tabs" id="tab2" class="hidden-toggle">
+
+            <div class="tab-navigation">
+                <!-- 3. As abas são LABELS que ativam os radios -->
+                <label for="tab1" class="tab-link">Meus Livros</label>
+                <label for="tab2" class="tab-link">Minhas Trocas</label>
+            </div>
+
+            <div class="tab-content-wrapper">
+                <div id="meus-livros" class="tab-content">
+                    <h3>Livros que você está oferecendo para troca:</h3>
+                    <div class="book-grid profile-book-grid">
+                        <!-- Card 1 -->
+                        <div class="book-card">
+                            <div class="book-cover">
+                                <img src="/img/duna.jpg" alt="Capa do livro Duna">
+                                <div class="bookmark saved"></div>
+                            </div>
+                            <div class="book-info">
+                                <h3 class="book-title">Duna</h3>
+                                <p class="book-author">Frank Herbert</p>
+                            </div>
+                        </div>
+
+                        <!-- Card 2 -->
+                        <div class="book-card">
+                            <div class="book-cover">
+                                <img src="/img/o-programador-pragmatico.jpg"
+                                    alt="Capa do livro O Programador Pragmático">
+                                <div class="bookmark"></div>
+                            </div>
+                            <div class="book-info">
+                                <h3 class="book-title">O Programador Pragmático</h3>
+                                <p class="book-author">Andrew Hunt, David Thomas</p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <!-- Substitua a sua seção "minhas-trocas" por esta -->
+
+                <div id="minhas-trocas" class="tab-content">
+                    <h3>Histórico de Trocas</h3>
+                    <ul class="trade-list">
+
+                        <!-- Exemplo 1: Uma solicitação que VOCÊ FEZ e está pendente -->
+                        <li class="trade-item pending">
+                            <div class="trade-details">
+                                <span class="trade-direction outgoing">▲ Você solicitou</span>
+                                <p class="trade-info">
+                                    O livro <span class="trade-book-title">"Duna"</span> para o usuário
+                                    <strong>@carlos_s</strong>.
+                                </p>
+                            </div>
+                            <div class="trade-status">Aguardando Resposta</div>
+                        </li>
+
+                        <!-- Exemplo 2: Uma solicitação que VOCÊ RECEBEU e está pendente -->
+                        <li class="trade-item pending">
+                            <div class="trade-details">
+                                <span class="trade-direction incoming">▼ Você recebeu</span>
+                                <p class="trade-info">
+                                    Uma solicitação de <strong>@ana_leitora</strong> pelo seu livro <span
+                                        class="trade-book-title">"Arquitetura Limpa"</span>.
+                                </p>
+                            </div>
+                            <!-- Para solicitações recebidas, você pode adicionar botões de ação -->
+                            <div class="trade-actions">
+                                <button class="btn-accept">Aceitar</button>
+                                <button class="btn-reject">Recusar</button>
+                            </div>
+                        </li>
+
+                        <!-- Exemplo 3: Uma troca CONCLUÍDA -->
+                        <li class="trade-item completed">
+                            <div class="trade-details">
+                                <span class="trade-direction outgoing">✔ Troca realizada</span>
+                                <p class="trade-info">
+                                    Você trocou <span class="trade-book-title">"1984"</span> com o usuário
+                                    <strong>@leitor_voraz</strong>.
+                                </p>
+                            </div>
+                            <div class="trade-status">Concluída</div>
+                        </li>
+
+                        <!-- Exemplo 4: Uma troca que foi RECUSADA -->
+                        <li class="trade-item rejected">
+                            <div class="trade-details">
+                                <span class="trade-direction incoming">✖ Solicitação recusada</span>
+                                <p class="trade-info">
+                                    Você recusou a solicitação de <strong>@pedro_h</strong> pelo seu livro <span
+                                        class="trade-book-title">"O Poder do Hábito"</span>.
+                                </p>
+                            </div>
+                            <div class="trade-status">Recusada</div>
+                        </li>
+
+                    </ul>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <p>&copy; 2025 BookSwap. Todos os direitos reservados.</p>
+    </footer>
+
 </body>
 
 </html>

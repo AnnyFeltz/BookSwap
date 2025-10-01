@@ -124,10 +124,6 @@
 
 <body>
 
-    <header class="top-bar">
-        
-    </header>
-
     <main class="card">
         <div class="register-link">
             <a href="/register">Register ></a>
@@ -150,6 +146,7 @@
         </form>
 
         <a href="#" class="forgot-link">Forgot password?</a>
+        
     </main>
 
 </body>

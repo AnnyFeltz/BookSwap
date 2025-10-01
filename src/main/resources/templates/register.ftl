@@ -26,8 +26,6 @@
       min-height: 100vh;
     }
 
-  
-
     .logo-icon {
       height: 35px;
     }
@@ -123,12 +121,6 @@
   </style>
 </head>
 <body>
-
-  
-  <header class="top-bar">
- 
-  </header>
-
   
   <main class="card">
     <div class="login-link">
@@ -155,6 +147,7 @@
     </form>
 
     <a href="#" class="forgot-link">Forgot password?</a>
+    
   </main>
 
 </body>

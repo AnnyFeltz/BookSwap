@@ -31,7 +31,7 @@ body {
 }
 
 .site-header {
-    background-color: var(--cor-surface);
+    background-color: #948AC9; 
     padding: 15px 40px;
     display: flex;
     justify-content: space-between;
@@ -45,11 +45,11 @@ body {
 .site-header h1 {
     font-size: 1.8em;
     font-weight: 700;
-    color: var(--cor-primaria);
+    color: white;
 }
 
 .site-header nav a {
-    color: var(--cor-texto-suave);
+    color: white;
     text-decoration: none;
     margin-left: 25px;
     font-weight: 500;
@@ -228,7 +228,7 @@ body {
     border: none;
     padding: 0;
     
-    color: var(--cor-texto-suave);
+    color: white;
     font-family: inherit;
     font-size: inherit; 
     font-weight: 500; 
@@ -241,6 +241,327 @@ body {
 .logout-button-top:hover {
     color: var(--cor-primaria);
 }
+
+
+/* === ESTILOS PARA A PÁGINA DE PERFIL === */
+
+/* O card principal que contém tudo */
+.profile-card {
+    max-width: 800px; /* Define uma largura máxima */
+    margin: 40px auto; /* Centraliza o card na página com margem no topo/baixo */
+    background-color: var(--cor-surface);
+    border-radius: 16px;
+    box-shadow: var(--sombra-card);
+    padding: 30px 40px;
+    display: flex;
+    flex-direction: column;
+    gap: 30px; /* Espaço entre as seções do perfil */
+}
+
+.profile-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #eee;
+    padding-bottom: 20px;
+}
+
+.profile-header h2 {
+    font-size: 1.8em;
+    color: var(--cor-primaria);
+}
+
+/* === INSÍGNIA DE CRÉDITOS (VERSÃO ELEGANTE E ANIMADA) === */
+
+.credits-system {
+    /* 1. Fundo sólido, sem gradiente, usando nosso azul secundário */
+    background-color: var(--cor-secundaria);
+    color: white;
+    
+    padding: 8px 16px;
+    border-radius: 50px;
+    font-weight: 600; /* Um pouco mais leve que antes */
+    font-size: 1em;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    
+    /* 2. Sombra mais sutil, sem borda interna */
+    box-shadow: 0 2px 6px rgba(0, 91, 255, 0.3);
+    
+    transition: all 0.2s ease-out;
+}
+
+.credits-system:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 91, 255, 0.4);
+}
+
+.credits-icon {
+    width: 20px;
+    height: 20px;
+}
+
+
+.user-info-section {
+    display: grid;
+    grid-template-columns: 1fr 2fr;
+    align-items: center;
+    justify-items: center;
+    gap: 30px;
+}
+
+.profile-pic {
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    overflow: hidden; /* Garante que a imagem fique redonda */
+    border: 4px solid var(--cor-primaria);
+}
+
+.profile-pic img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Evita distorção da imagem */
+}
+
+.user-details h1 {
+    font-size: 2em;
+    margin-bottom: 5px;
+    color: var(--cor-texto);
+    text-align: center;
+}
+
+.user-details p {
+    font-size: 1.1em;
+    text-align: center;
+    color: var(--cor-texto-suave);
+}
+
+/* Estilos para os botões de ação */
+.profile-actions {
+    display: flex;
+    justify-content: flex-end; /* Alinha os botões à direita */
+    gap: 15px;
+    padding-top: 20px;
+    border-top: 1px solid #eee;
+}
+
+/* Estilos genéricos para botões */
+.btn-primary, .btn-secondary, .btn-danger {
+    border: none;
+    padding: 12px 25px;
+    border-radius: 8px;
+    font-size: 1em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-primary {
+    background-color: var(--cor-primaria);
+    color: white;
+}
+.btn-primary:hover { background-color: #00487c; }
+
+.btn-secondary {
+    background-color: #e0e0e0;
+    color: #333;
+}
+.btn-secondary:hover { background-color: #ccc; }
+
+.btn-danger {
+    background-color: #dc3545;
+    color: white;
+}
+.btn-danger:hover { background-color: #c82333; }
+
+
+/* Estilos para o formulário de atualização */
+.update-form-container {
+    background-color: #f9f9f9;
+    padding: 25px;
+    border-radius: 12px;
+    border: 1px solid #eee;
+}
+
+.update-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.update-form h4 {
+    text-align: center;
+    font-size: 1.2em;
+    color: var(--cor-primaria);
+}
+
+.update-form label {
+    font-weight: 600;
+    font-size: 0.9em;
+}
+
+.update-form input {
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 1em;
+}
+
+/* === ESTILOS PARA PERFIL E ABAS (100% CSS) === */
+
+/* Esconde os inputs de controle */
+.hidden-toggle {
+    display: none;
+}
+
+/* --- Lógica e Estilo do Formulário de Atualização --- */
+
+.update-form-wrapper {
+    max-width: 800px;
+    margin: -20px auto 0 auto; /* Margem negativa para "subir" e ficar próximo do card */
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.5s ease-in-out; /* Animação suave */
+}
+
+.update-form-container {
+    padding: 25px;
+    background-color: #f9f9f9;
+    border-radius: 0 0 16px 16px; /* Cantos arredondados apenas na parte de baixo */
+    border: 1px solid #eee;
+    border-top: none;
+}
+
+/* A MÁGICA: Quando o checkbox é marcado, o wrapper do formulário ganha altura */
+#toggle-update:checked + .update-form-wrapper {
+    max-height: 500px; /* Altura suficiente para o formulário aparecer */
+}
+
+/* --- Lógica e Estilo das Abas --- */
+
+.profile-tabs-container {
+    max-width: 800px;
+    margin: 20px auto 40px auto;
+    background-color: var(--cor-surface);
+    border-radius: 16px;
+    box-shadow: var(--sombra-card);
+    overflow: hidden;
+}
+
+.tab-navigation {
+    display: flex;
+    background-color: #f1f1f1;
+    border-bottom: 1px solid #ddd;
+}
+
+.tab-link { /* As abas agora são LABELS */
+    cursor: pointer;
+    padding: 14px 20px;
+    transition: background-color 0.3s;
+    font-size: 1.1em;
+    font-weight: 600;
+    color: var(--cor-texto-suave);
+    flex-grow: 1;
+    text-align: center;
+}
+
+.tab-link:hover {
+    background-color: #ddd;
+}
+
+.tab-content-wrapper {
+    padding: 20px 30px;
+}
+
+.tab-content {
+    display: none; /* Esconde todas as abas por padrão */
+}
+
+/* A MÁGICA: Mostra o conteúdo da aba quando o rádio correspondente está marcado */
+#tab1:checked ~ .tab-content-wrapper #meus-livros,
+#tab2:checked ~ .tab-content-wrapper #minhas-trocas {
+    display: block;
+}
+
+/* Estiliza o LABEL da aba ativa */
+#tab1:checked ~ .tab-navigation label[for='tab1'],
+#tab2:checked ~ .tab-navigation label[for='tab2'] {
+    background-color: var(--cor-surface);
+    color: var(--cor-primaria);
+}
+
+/* === ESTILOS ADICIONAIS PARA A LISTA DE TROCAS === */
+
+.trade-item {
+    /* Mantém os estilos anteriores, mas ajusta o alinhamento */
+    align-items: flex-start; /* Alinha os itens no topo */
+}
+
+.trade-details {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+.trade-direction {
+    font-size: 0.8em;
+    font-weight: 700;
+    padding: 3px 8px;
+    border-radius: 4px;
+    align-self: flex-start; /* Faz o balão ter o tamanho do texto */
+}
+
+/* Cores para a direção da troca */
+.trade-direction.outgoing {
+    background-color: #e6f2ff;
+    color: #005a9c;
+}
+.trade-direction.incoming {
+    background-color: #fff0e6;
+    color: #d9534f;
+}
+
+.trade-info {
+    font-size: 1em;
+    color: var(--cor-texto-suave);
+}
+
+.trade-info strong {
+    color: var(--cor-texto);
+    font-weight: 600;
+}
+
+/* Contêiner para os botões de Aceitar/Recusar */
+.trade-actions {
+    display: flex;
+    gap: 10px;
+    margin-left: auto; /* Empurra os botões para a direita */
+    padding-left: 20px;
+}
+
+.btn-accept, .btn-reject {
+    border: none;
+    padding: 8px 15px;
+    border-radius: 6px;
+    font-size: 0.9em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.btn-accept {
+    background-color: #28a745;
+    color: white;
+}
+.btn-accept:hover { background-color: #218838; }
+
+.btn-reject {
+    background-color: #dc3545;
+    color: white;
+}
+.btn-reject:hover { background-color: #c82333; }
 
 
 /* === MEDIA QUERIES PARA AJUSTES FINOS === */
