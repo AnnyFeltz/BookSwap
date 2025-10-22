@@ -12,12 +12,10 @@ public class App {
     public static void main(String[] args) {
         System.out.println("Hello world!");
 
-        // configurações
         Configuration cfg = new Configuration(Configuration.VERSION_2_3_34);
         cfg.setClassForTemplateLoading(App.class, "/templates");
         cfg.setDefaultEncoding("UTF-8");
 
-        // criando e configurando o javalin
         Javalin app = Javalin.create(config -> {
             config.staticFiles.add(staticFiles -> {
                 staticFiles.directory = "/public";
@@ -41,27 +39,21 @@ public class App {
             }
         });
 
-
-        // controllers
         AuthenticationController authenticationController = new AuthenticationController();
         UserController userController = new UserController();
 
-        // formularios de autenticação
         app.get("/register", ctx -> ctx.render("register.ftl"));
         app.get("/login", ctx -> ctx.render("login.ftl"));
 
-        // rotas post de autenticação
         app.post("/register", authenticationController::register);
         app.post("/login", authenticationController::login);
         app.post("/logout", authenticationController::logout);
 
-        // rotas de perfil
         app.get("/perfil", userController::verPerfil);
         app.post("/perfil/update", userController::atualizarPerfil);
         app.post("/perfil/delete", userController::deletarConta);
+        app.post("/perfil/upload-foto", userController::uploadFotoPerfil); 
 
-        // rota "/" protegida
         app.get("/", ctx -> ctx.render("index.ftl"));
-
     }
 }

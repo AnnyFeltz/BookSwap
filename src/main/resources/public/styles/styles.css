@@ -9,12 +9,14 @@
     --sombra-card-hover: 0 6px 16px rgba(0, 0, 0, 0.12);
 }
 
+/* JUNTADO: * do styles.css, login e registro */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
+/* Base Body/HTML (Usando as regras do styles.css que são mais completas) */
 html,
 body {
     height: 100%;
@@ -28,6 +30,20 @@ body {
     flex-direction: column;
     min-height: 100vh;
 }
+
+/* Estilos de Login/Registro que precisam de regras específicas de Body/HTML */
+body.login-or-register-page { /* Crie uma classe no <body> para estas páginas */
+    background-size: cover; /* Altera o background-size para cover */
+    background-attachment: initial; /* Remove background-attachment: fixed */
+    align-items: center;
+    justify-content: flex-start;
+    padding: 8% 0% 0% 0%;
+    min-height: 100%; /* Repetido para garantir prioridade */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Ajustado para a fonte de Login/Registro */
+}
+
+
+/* --- SEÇÃO HEADER/FOOTER (Geral) --- */
 
 .site-header {
     background-color: #948AC9; 
@@ -47,6 +63,12 @@ body {
     color: white;
 }
 
+.site-header nav {
+    display: flex;
+    align-items: center;
+    gap: 25px;
+}
+
 .site-header nav a {
     color: white;
     text-decoration: none;
@@ -56,6 +78,28 @@ body {
 }
 
 .site-header nav a:hover {
+    color: var(--cor-primaria);
+}
+
+.site-header nav form {
+    margin: 0;
+    padding: 0;
+}
+
+
+.logout-button-top {
+    background: none;
+    border: none;
+    padding: 0;
+    color: white;
+    font-family: inherit;
+    font-size: inherit; 
+    font-weight: 500; 
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+.logout-button-top:hover {
     color: var(--cor-primaria);
 }
 
@@ -78,6 +122,8 @@ body {
     padding: 20px;
     font-size: 0.9em;
 }
+
+/* --- SEÇÃO GRID/DASHBOARD --- */
 
 .dashboard-toolbar {
     display: flex;
@@ -206,36 +252,118 @@ body {
     color: var(--cor-primaria);
 }
 
-.site-header nav {
+/* --- SEÇÃO CARD DE LOGIN/REGISTRO/PERFIL --- */
+
+/* JUNTADO: .card de login e registro, mantendo o maior padding */
+.card {
+    background-color: #a4cfffff;
+    margin-top: 90px;
+    padding: 50px 35px; /* Maior padding do registro */
+    border-radius: 15px;
+    width: 90%;
+    max-width: 540px; 
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    text-align: center;
+    position: relative;
+}
+
+/* JUNTADO: .logo-icon de login e registro */
+.logo-icon {
+    height: 35px;
+}
+
+/* JUNTADO: .logo-section img de login e registro */
+.logo-section img {
+    width: 60px;
+    margin-bottom: 10px;
+}
+
+/* JUNTADO: .logo-section h2 de login e registro */
+.logo-section h2 {
+    margin: 5px 0;
+    font-size: 1.4em;
+    color: #002f6c;
+}
+
+/* JUNTADO: .logo-section p de login e registro */
+.logo-section p {
+    font-size: 0.9em;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* JUNTADO: .form de login e registro */
+.form {
     display: flex;
-    align-items: center;
-    gap: 25px;
+    flex-direction: column;
+    gap: 10px;
+    text-align: left;
 }
 
-.site-header nav form {
-    margin: 0;
-    padding: 0;
+/* JUNTADO: .form label de login e registro */
+.form label {
+    font-weight: bold;
+    color: #002f6c;
+    font-size: 0.9em;
 }
 
+/* JUNTADO: .form input de login e registro */
+.form input {
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #bbb;
+    font-size: 0.9em;
+}
 
-.logout-button-top {
-    background: none;
-    border: none;
-    padding: 0;
-    
+/* JUNTADO: .btn de login e registro */
+.btn {
+    margin-top: 15px;
+    padding: 12px;
+    background: #004c8c;
     color: white;
-    font-family: inherit;
-    font-size: inherit; 
-    font-weight: 500; 
-
+    border: none;
+    border-radius: 25px;
+    font-size: 1em;
+    font-weight: bold;
     cursor: pointer;
-
-    transition: color 0.2s ease;
+    transition: background 0.2s;
 }
 
-.logout-button-top:hover {
-    color: var(--cor-primaria);
+/* JUNTADO: .btn:hover de login e registro */
+.btn:hover {
+    background: #003366;
 }
+
+/* JUNTADO: .forgot-link de login e registro */
+.forgot-link {
+    display: block;
+    margin-top: 15px;
+    font-size: 0.8em;
+    color: #333;
+    text-decoration: none;
+}
+
+/* Links de Login/Registro no Card */
+.login-link { /* Usado no REGISTRO para ir para LOGIN */
+    position: absolute;
+    top: 10px;
+    right: 15px;
+}
+
+.login-link a, .register-link a {
+    font-size: 0.9em;
+    color: #0d47a1;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.register-link { /* Usado no LOGIN para ir para REGISTRO */
+    position: absolute;
+    top: 10px;
+    right: 15px;
+}
+
+/* --- SEÇÃO PERFIL --- */
 
 .profile-card {
     max-width: 800px; 
@@ -262,11 +390,9 @@ body {
     color: var(--cor-primaria);
 }
 
-
 .credits-system {
     background-color: var(--cor-secundaria);
     color: white;
-    
     padding: 8px 16px;
     border-radius: 50px;
     font-weight: 600;
@@ -287,7 +413,6 @@ body {
     width: 20px;
     height: 20px;
 }
-
 
 .user-info-section {
     display: grid;
@@ -332,6 +457,7 @@ body {
     border-top: 1px solid #eee;
 }
 
+/* Botões - Juntado: .btn-primary, .btn-secondary, .btn-danger */
 .btn-primary, .btn-secondary, .btn-danger {
     border: none;
     padding: 12px 25px;
@@ -360,12 +486,18 @@ body {
 }
 .btn-danger:hover { background-color: #c82333; }
 
+/* --- SEÇÃO FORMULÁRIO DE ATUALIZAÇÃO (Perfil) --- */
 
+/* JUNTADO: .update-form-container (do style do HTML e do styles.css), mantendo as propriedades que não entraram no seletor do styles.css */
 .update-form-container {
     background-color: #f9f9f9;
     padding: 25px;
     border-radius: 12px;
     border: 1px solid #eee;
+    
+    /* Regras do styles.css que definem o design da aba aberta */
+    border-radius: 0 0 16px 16px; 
+    border-top: none;
 }
 
 .update-form {
@@ -392,30 +524,52 @@ body {
     font-size: 1em;
 }
 
+/* Regras de Esconder/Mostrar Formulário */
 .hidden-toggle {
     display: none;
 }
 
-.update-form-wrapper {
+.update-form-wrapper,
+.upload-form-wrapper { /* Adicionei .upload-form-wrapper aqui para alinhar as regras principais */
     max-width: 800px;
     margin: -20px auto 0 auto;
     max-height: 0;
     overflow: hidden;
-    transition: max-height 0.5s ease-in-out;
+    /* Transição mais completa (do style do HTML do Perfil) */
+    transition: max-height 0.5s ease-in-out, padding 0.3s ease-out, margin 0.3s ease-out;
+    padding: 0 10px; 
+    margin-bottom: 0;
 }
 
-.update-form-container {
-    padding: 25px;
-    background-color: #f9f9f9;
-    border-radius: 0 0 16px 16px; 
-    border: 1px solid #eee;
-    border-top: none;
-}
 
-#toggle-update:checked + .update-form-wrapper {
+/* Sobrescrevendo o max-height do styles.css para garantir a abertura */
+#toggle-update:checked ~ .update-form-wrapper {
     max-height: 500px; 
+    padding: 10px 10px; 
+    margin-bottom: 10px;
 }
 
+/* Estilos Específicos do Upload de Foto (Estavam apenas no style do HTML) */
+#toggle-photo:checked ~ .upload-form-wrapper {
+    max-height: 400px; 
+    padding: 10px 10px; 
+    margin-bottom: 10px; 
+}
+
+.photo-upload-preview {
+    text-align: center;
+    margin: 15px 0;
+}
+
+.photo-upload-preview img {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 3px solid #3498db; 
+}
+
+/* --- SEÇÃO ABAS (Perfil) --- */
 
 .profile-tabs-container {
     max-width: 800px;
@@ -466,6 +620,7 @@ body {
     color: var(--cor-primaria);
 }
 
+/* Estilos de Trocas */
 .trade-item {
     align-items: flex-start;
 }
@@ -532,6 +687,8 @@ body {
 }
 .btn-reject:hover { background-color: #c82333; }
 
+
+/* --- MEDIA QUERY --- */
 
 @media (max-width: 768px) {
     .site-content {

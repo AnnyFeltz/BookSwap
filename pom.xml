@@ -58,6 +58,12 @@
             <version>0.4</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.jetbrains.kotlin</groupId>
+            <artifactId>kotlin-stdlib</artifactId>
+            <version>1.9.22</version> 
+        </dependency>
+        
     </dependencies>
 
     <build>

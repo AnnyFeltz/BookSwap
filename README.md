@@ -123,3 +123,30 @@ O sistema possui dois principais atores:
 
 💡 **BookSwap** promove o compartilhamento de histórias e o acesso à leitura de forma sustentável e colaborativa.
 >>>>>>> 17fdce8d14edae2870aaca64e1cefb69866409dd
+
+
+<!-- BD -->
+
+<!-- 
+
+CREATE TABLE users_bs (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    
+    nome VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL UNIQUE,
+    senha VARCHAR(255) NOT NULL, 
+    
+    data_registro TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP, 
+    
+    -- Colunas de Perfil e Créditos
+    perfil VARCHAR(50) NOT NULL DEFAULT 'USUARIO', 
+    creditos_disponiveis INT NOT NULL DEFAULT 0,
+    
+    -- Colunas de Penalidade
+    status_penalidade VARCHAR(50) NOT NULL DEFAULT 'ATIVO',
+    motivo_penalidade TEXT NULL,
+    data_inicio_penalidade TIMESTAMP NULL,
+    data_fim_penalidade TIMESTAMP NULL
+);
+
+ -->
