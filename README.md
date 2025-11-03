@@ -129,24 +129,153 @@ O sistema possui dois principais atores:
 
 <!-- 
 
-CREATE TABLE users_bs (
-    id INT AUTO_INCREMENT PRIMARY KEY,
+CREATE TABLE usuarios_bs (
+    idUsuario INT AUTO_INCREMENT PRIMARY KEY,
     
     nome VARCHAR(255) NOT NULL,
-    email VARCHAR(255) NOT NULL UNIQUE,
-    senha VARCHAR(255) NOT NULL, 
+    email VARCHAR(45) NOT NULL UNIQUE, 
+    senha VARCHAR(45) NOT NULL, 
     
-    data_registro TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP, 
+    role VARCHAR(45) NOT NULL,
+    status VARCHAR(45) NOT NULL,
     
-    -- Colunas de Perfil e Créditos
-    perfil VARCHAR(50) NOT NULL DEFAULT 'USUARIO', 
-    creditos_disponiveis INT NOT NULL DEFAULT 0,
-    
-    -- Colunas de Penalidade
-    status_penalidade VARCHAR(50) NOT NULL DEFAULT 'ATIVO',
-    motivo_penalidade TEXT NULL,
-    data_inicio_penalidade TIMESTAMP NULL,
-    data_fim_penalidade TIMESTAMP NULL
+    foto_perfil VARCHAR(255) NULL, 
+    localizacao VARCHAR(45) NULL, 
+
+    data_registro TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );
 
+CREATE TABLE trocas_bs (
+    idTroca INT AUTO_INCREMENT PRIMARY KEY,
+    
+    idUsuario_ofertando INT NOT NULL, 
+    idUsuario_recebendo INT NOT NULL, 
+    
+    data_inicio DATE NOT NULL,
+    data_limite_transacao DATE NULL, 
+    status_troca VARCHAR(45) NOT NULL,
+    
+    
+    FOREIGN KEY (idUsuario_ofertando) 
+        REFERENCES usuarios_bs(idUsuario),
+        
+    FOREIGN KEY (idUsuario_recebendo) 
+        REFERENCES usuarios_bs(idUsuario)
+);
+
+CREATE TABLE chats_bs (
+    idChat INT AUTO_INCREMENT PRIMARY KEY,
+    idTroca INT NOT NULL, 
+    
+    FOREIGN KEY (idTroca) 
+        REFERENCES trocas_bs(idTroca) 
+);
+
+CREATE TABLE mensagens_bs (
+    idMensagem INT AUTO_INCREMENT PRIMARY KEY,
+    idChat INT NOT NULL, 
+    idUsuario_remetente INT NOT NULL, 
+    
+    texto VARCHAR(255) NOT NULL,
+    data_hora DATETIME NOT NULL, 
+
+    FOREIGN KEY (idChat) 
+        REFERENCES chats_bs(idChat),
+        
+  
+    FOREIGN KEY (idUsuario_remetente) 
+        REFERENCES usuarios_bs(idUsuario)
+);
+
+CREATE TABLE registros_moderacao_bs (
+    idRegistro_Moderacao INT AUTO_INCREMENT PRIMARY KEY,
+    
+    idUsuario_moderador INT NOT NULL, 
+    idUsuario INT NOT NULL,           
+    
+    tipo_acao VARCHAR(45) NOT NULL,
+    motivo VARCHAR(45) NOT NULL,
+    data_acao DATE NOT NULL,
+    
+   
+    FOREIGN KEY (idUsuario_moderador) 
+        REFERENCES usuarios_bs(idUsuario),
+        
+    FOREIGN KEY (idUsuario) 
+        REFERENCES usuarios_bs(idUsuario)
+);
+
+CREATE TABLE creditos_bs (
+    idUsuario INT NOT NULL PRIMARY KEY,
+    
+    saldo_atual VARCHAR(45) NOT NULL,
+    
+    FOREIGN KEY (idUsuario) 
+        REFERENCES usuarios_bs(idUsuario)
+);
+
+CREATE TABLE disputas_bs (
+    idDisputa INT AUTO_INCREMENT PRIMARY KEY,
+    
+    idTroca INT NOT NULL, 
+    Usuario_idUsuario INT NOT NULL, 
+    motivo_reclamacao VARCHAR(45) NOT NULL,
+    status_disputa VARCHAR(45) NOT NULL,
+    data_abertura DATE NOT NULL,
+    resultado_resolucao VARCHAR(255) NULL,  
+    
+    FOREIGN KEY (idTroca) 
+        REFERENCES trocas_bs(idTroca),
+        
+    FOREIGN KEY (Usuario_idUsuario) 
+        REFERENCES usuarios_bs(idUsuario)
+);
+
+CREATE TABLE livros_bs (
+    idLivro INT AUTO_INCREMENT PRIMARY KEY,
+    
+    idUsuario_proprietario INT NOT NULL, 
+    
+    titulo VARCHAR(45) NOT NULL,
+    autor VARCHAR(255) NOT NULL,
+    condicao_estado VARCHAR(45) NOT NULL,
+    preco_creditos DOUBLE NOT NULL, 
+    foto_capa VARCHAR(255) NULL, 
+    status_troca VARCHAR(45) NOT NULL, 
+    
+   
+    FOREIGN KEY (idUsuario_proprietario) 
+        REFERENCES usuarios_bs(idUsuario)
+);
+
+CREATE TABLE transacoes_bs (
+    idTransacao INT AUTO_INCREMENT PRIMARY KEY,
+    
+    idUsuario INT NOT NULL, 
+    
+    tipo VARCHAR(45) NOT NULL,
+    valor_creditos VARCHAR(45) NOT NULL, 
+    data_transacao DATE NOT NULL,
+    origem_descricao VARCHAR(45) NOT NULL,
+    nome_pacote_compra VARCHAR(255) NULL, 
+    
+    FOREIGN KEY (idUsuario) 
+        REFERENCES usuarios_bs(idUsuario)
+);
+
+CREATE TABLE detalhes_troca_bs (
+    idDetalhe_troca INT AUTO_INCREMENT PRIMARY KEY,
+    
+    idTroca INT NOT NULL, 
+    idLivro_ofertado INT NULL,  
+    
+    credito_ofertados VARCHAR(45) NULL, 
+    status_livro VARCHAR(45) NOT NULL,
+    
+    FOREIGN KEY (idTroca) 
+        REFERENCES trocas_bs(idTroca),
+        
+    FOREIGN KEY (idLivro_ofertado) 
+        REFERENCES livros_bs(idLivro)
+);
  -->
