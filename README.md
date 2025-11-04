@@ -221,7 +221,8 @@ CREATE TABLE disputas_bs (
     idTroca INT NOT NULL, 
     Usuario_idUsuario INT NOT NULL, 
     motivo_reclamacao VARCHAR(45) NOT NULL,
-    status_disputa VARCHAR(45) NOT NULL,
+    status_disputa enum('ABERTA', 'EM_ANALISE', 'RESOLVIDA', 'CANCELADA') NOT NULL,
+    
     data_abertura DATE NOT NULL,
     resultado_resolucao VARCHAR(255) NULL,  
     
@@ -254,7 +255,8 @@ CREATE TABLE transacoes_bs (
     
     idUsuario INT NOT NULL, 
     
-    tipo VARCHAR(45) NOT NULL,
+    tipo enum('CARTAO_DEBITO', 'CARTAO_CREDITO', 'PIX', 'BOLETO', 'SALDO_CREDITOS') NOT NULL,
+    
     valor_creditos VARCHAR(45) NOT NULL, 
     data_transacao DATE NOT NULL,
     origem_descricao VARCHAR(45) NOT NULL,
