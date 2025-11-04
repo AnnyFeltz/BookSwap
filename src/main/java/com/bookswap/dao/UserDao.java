@@ -43,7 +43,7 @@ public class UserDao implements IUserRepository {
         return user;
     }
 
-
+    @Override
     public User findById(int id) {
         String sql = "SELECT " + SELECT_ALL_FIELDS + " FROM " + TABLE_NAME + " WHERE idUsuario = ?";
         try (Connection conn = DatabaseConnection.getConnection();
@@ -62,6 +62,7 @@ public class UserDao implements IUserRepository {
         return null;
     }
 
+    @Override
     public User findByEmail(String email) {
         String sql = "SELECT " + SELECT_ALL_FIELDS + " FROM " + TABLE_NAME + " WHERE email = ?";
         try (Connection conn = DatabaseConnection.getConnection();
@@ -80,6 +81,7 @@ public class UserDao implements IUserRepository {
         return null;
     }
     
+    @Override
     public void save(User user) {
         String sql = "INSERT INTO " + TABLE_NAME + " (" + INSERT_FIELDS + ") VALUES (?,?,?,?,?,?,?)";
 
@@ -104,6 +106,7 @@ public class UserDao implements IUserRepository {
         }
     }
 
+    @Override
     public void update(User user) {
         String sql = "UPDATE " + TABLE_NAME + " SET nome = ?, email = ?, role = ?, status = ?, foto_perfil = ?, localizacao = ? WHERE idUsuario = ?";
 
@@ -128,6 +131,7 @@ public class UserDao implements IUserRepository {
         }
     }
 
+    @Override
     public void delete(int id) {
         String sql = "DELETE FROM " + TABLE_NAME + " WHERE idUsuario = ?";
         try (Connection conn = DatabaseConnection.getConnection();

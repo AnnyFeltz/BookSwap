@@ -10,9 +10,9 @@ import java.util.List;
 import com.bookswap.database.DatabaseConnection; // Assumindo que você tem essa classe
 import com.bookswap.models.Livro;
 import com.bookswap.models.subModels.LivroStatus;
-import com.bookswap.repository.ILivroRepository;
+// import com.bookswap.repository.ILivroRepository;
 
-public class LivroDao implements ILivroRepository{
+public class LivroDao{
     
     private static final String TABLE_NAME = "livros_bs";
 
@@ -37,7 +37,7 @@ public class LivroDao implements ILivroRepository{
         return livro;
     }
 
-    @Override
+    // @Override
     public void save(Livro livro) {
         String sql = "INSERT INTO " + TABLE_NAME + " (" + INSERT_FIELDS + ") VALUES (?,?,?,?,?,?,?)";
 
@@ -62,7 +62,7 @@ public class LivroDao implements ILivroRepository{
         }
     }
 
-    @Override
+    // @Override
     public Livro findById(int id) {
         String sql = "SELECT " + SELECT_ALL_FIELDS + " FROM " + TABLE_NAME + " WHERE idLivro = ?";
         try (Connection conn = DatabaseConnection.getConnection();
@@ -81,7 +81,7 @@ public class LivroDao implements ILivroRepository{
         return null;
     }
 
-    @Override
+    // @Override
     public List<Livro> findByUserId(int idUsuario) {
         List<Livro> livros = new ArrayList<>();
         String sql = "SELECT " + SELECT_ALL_FIELDS + " FROM " + TABLE_NAME + " WHERE idUsuario = ?";
@@ -101,7 +101,7 @@ public class LivroDao implements ILivroRepository{
         return livros;
     }
 
-    @Override
+    // @Override
     public List<Livro> findByTitulo(String titulo) {
         List<Livro> livros = new ArrayList<>();
         String sql = "SELECT " + SELECT_ALL_FIELDS + " FROM " + TABLE_NAME + " WHERE titulo LIKE ?";
@@ -123,7 +123,7 @@ public class LivroDao implements ILivroRepository{
         return livros;
     }
 
-    @Override
+    // @Override
     public List<Livro> findAllAvailable() {
         List<Livro> livros = new ArrayList<>();
         String sql = "SELECT " + SELECT_ALL_FIELDS + " FROM " + TABLE_NAME + " WHERE status_livro = ?"; 
@@ -144,7 +144,7 @@ public class LivroDao implements ILivroRepository{
         return livros;
     }
 
-    @Override
+    // @Override
     public void update(Livro livro) {
         String sql = "UPDATE " + TABLE_NAME + " SET titulo = ?, autor = ?, condicao_estado = ?, preco_creditos = ?, foto_capa = ?, status_livro = ? WHERE idLivro = ?";
 
@@ -167,7 +167,7 @@ public class LivroDao implements ILivroRepository{
         }
     }
 
-    @Override
+    // @Override
     public void delete(int id) {
         String sql = "DELETE FROM " + TABLE_NAME + " WHERE idLivro = ?";
         try (Connection conn = DatabaseConnection.getConnection();
