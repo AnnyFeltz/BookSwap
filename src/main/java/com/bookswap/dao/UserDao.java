@@ -10,8 +10,9 @@ import com.bookswap.database.DatabaseConnection;
 import com.bookswap.models.User;
 import com.bookswap.models.UserRole;
 import com.bookswap.models.UserStatus;
+import com.bookswap.repository.IUserRepository;
 
-public class UserDao {
+public class UserDao implements IUserRepository {
     
     private static final String TABLE_NAME = "usuarios_bs";
     
