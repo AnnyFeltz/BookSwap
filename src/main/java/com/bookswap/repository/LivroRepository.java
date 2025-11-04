@@ -1,5 +1,7 @@
 package com.bookswap.repository; 
 
+import java.util.List;
+
 import com.bookswap.dao.LivroDao;
 import com.bookswap.models.Livro;
 
@@ -17,12 +19,12 @@ public class LivroRepository implements ILivroRepository {
     }
 
     @Override
-    public Livro findByIdUsuario(int idUsuario) {
+    public List<Livro> findByIdUsuario(int idUsuario) {
         return livroDao.findByIdUsuario(idUsuario);
     }
 
     @Override
-    public Livro findByTitulo(String titulo) {
+    public List<Livro> findByTitulo(String titulo) {
         return livroDao.findByTitulo(titulo);
     }
 
