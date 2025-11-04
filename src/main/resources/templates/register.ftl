@@ -11,7 +11,7 @@
   
   <main class="card">
     <div class="login-link">
-      <a href="/login">Login-in ></a>
+      <a href="/login">Login-in></a>
     </div>
 
     <div class="logo-section">

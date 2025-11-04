@@ -687,6 +687,38 @@ body.login-or-register-page { /* Crie uma classe no <body> para estas páginas *
 }
 .btn-reject:hover { background-color: #c82333; }
 
+/* --- SEÇÃO LIVROS (Detalhes) --- */
+.details-card{
+    background-color: var(--cor-surface);
+    border-radius: 12px;
+    box-shadow: var(--sombra-card);
+    padding: 10px;
+    display: flex;
+
+}
+
+.book-info-section{
+}
+
+.book-details{
+    flex-direction: column;
+}
+
+.book-details button{
+    background-color: #218838;
+    color: white;
+    padding: 10px;
+    border-radius: 2pc;
+}
+
+.book-details p{
+}
+
+.book-details img{
+    width: 500px;
+    left: 20px;
+}
+
 
 /* --- MEDIA QUERY --- */
 
