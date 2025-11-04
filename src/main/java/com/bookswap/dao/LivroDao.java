@@ -1,4 +1,4 @@
-package com.bookswap.dao;
+    package com.bookswap.dao;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -7,12 +7,12 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.bookswap.database.DatabaseConnection; // Assumindo que você tem essa classe
+import com.bookswap.database.DatabaseConnection; 
 import com.bookswap.models.Livro;
 import com.bookswap.models.subModels.LivroStatus;
-// import com.bookswap.repository.ILivroRepository;
+import com.bookswap.repository.ILivroRepository;
 
-public class LivroDao{
+public class LivroDao implements ILivroRepository{
     
     private static final String TABLE_NAME = "livros_bs";
 
@@ -37,7 +37,7 @@ public class LivroDao{
         return livro;
     }
 
-    // @Override
+    @Override
     public void save(Livro livro) {
         String sql = "INSERT INTO " + TABLE_NAME + " (" + INSERT_FIELDS + ") VALUES (?,?,?,?,?,?,?)";
 
@@ -62,7 +62,7 @@ public class LivroDao{
         }
     }
 
-    // @Override
+    @Override
     public Livro findById(int id) {
         String sql = "SELECT " + SELECT_ALL_FIELDS + " FROM " + TABLE_NAME + " WHERE idLivro = ?";
         try (Connection conn = DatabaseConnection.getConnection();
@@ -81,8 +81,8 @@ public class LivroDao{
         return null;
     }
 
-    // @Override
-    public List<Livro> findByUserId(int idUsuario) {
+    @Override
+    public List<Livro> findByIdUsuario(int idUsuario) {
         List<Livro> livros = new ArrayList<>();
         String sql = "SELECT " + SELECT_ALL_FIELDS + " FROM " + TABLE_NAME + " WHERE idUsuario = ?";
         try (Connection conn = DatabaseConnection.getConnection();
@@ -101,7 +101,7 @@ public class LivroDao{
         return livros;
     }
 
-    // @Override
+    @Override
     public List<Livro> findByTitulo(String titulo) {
         List<Livro> livros = new ArrayList<>();
         String sql = "SELECT " + SELECT_ALL_FIELDS + " FROM " + TABLE_NAME + " WHERE titulo LIKE ?";
@@ -123,7 +123,7 @@ public class LivroDao{
         return livros;
     }
 
-    // @Override
+    @Override
     public List<Livro> findAllAvailable() {
         List<Livro> livros = new ArrayList<>();
         String sql = "SELECT " + SELECT_ALL_FIELDS + " FROM " + TABLE_NAME + " WHERE status_livro = ?"; 
@@ -144,7 +144,7 @@ public class LivroDao{
         return livros;
     }
 
-    // @Override
+    @Override
     public void update(Livro livro) {
         String sql = "UPDATE " + TABLE_NAME + " SET titulo = ?, autor = ?, condicao_estado = ?, preco_creditos = ?, foto_capa = ?, status_livro = ? WHERE idLivro = ?";
 
@@ -167,7 +167,7 @@ public class LivroDao{
         }
     }
 
-    // @Override
+    @Override
     public void delete(int id) {
         String sql = "DELETE FROM " + TABLE_NAME + " WHERE idLivro = ?";
         try (Connection conn = DatabaseConnection.getConnection();

@@ -17,18 +17,23 @@ public class LivroRepository implements ILivroRepository {
     }
 
     @Override
-    public Livro findByTitulo(String email) {
-        return livroDao.findByTitulo(email);
+    public Livro findByIdUsuario(int idUsuario) {
+        return livroDao.findByIdUsuario(idUsuario);
+    }
+
+    @Override
+    public Livro findByTitulo(String titulo) {
+        return livroDao.findByTitulo(titulo);
     }
 
     @Override
     public void save(Livro livro) {
-        livroDao.save(Livro);
+        livroDao.save(livro);
     }
 
     @Override
     public void update(Livro livro) {
-        livroDao.update(Livro);
+        livroDao.update(livro);
     }
 
     @Override
