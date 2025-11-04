@@ -8,8 +8,8 @@ import java.sql.Timestamp;
 
 import com.bookswap.database.DatabaseConnection;
 import com.bookswap.models.User;
-import com.bookswap.models.UserRole;
-import com.bookswap.models.UserStatus;
+import com.bookswap.models.subModels.UserRole;
+import com.bookswap.models.subModels.UserStatus;
 import com.bookswap.repository.IUserRepository;
 
 public class UserDao implements IUserRepository {

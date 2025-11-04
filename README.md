@@ -242,7 +242,7 @@ CREATE TABLE livros_bs (
     condicao_estado VARCHAR(45) NOT NULL,
     preco_creditos DOUBLE NOT NULL, 
     foto_capa VARCHAR(255) NULL, 
-    status_troca VARCHAR(45) NOT NULL, 
+    status_livro ENUM('DISPONIVEL', 'INDISPONIVEL', 'EM_TROCA', 'TROCADO', 'INATIVO') NOT NULL, 
     
    
     FOREIGN KEY (idUsuario_proprietario) 

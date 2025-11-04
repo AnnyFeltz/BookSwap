@@ -1,4 +1,4 @@
-package com.bookswap.models;
+package com.bookswap.models.subModels;
 
 public enum UserStatus {
     ATIVO,

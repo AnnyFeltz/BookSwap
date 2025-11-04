@@ -2,6 +2,9 @@ package com.bookswap.models;
 
 import java.time.LocalDateTime;
 
+import com.bookswap.models.subModels.UserRole;
+import com.bookswap.models.subModels.UserStatus;
+
 public class User {
     private int id;
     private String nome;

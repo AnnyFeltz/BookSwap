@@ -1,5 +1,7 @@
 package com.bookswap.models;
 
+import com.bookswap.models.subModels.LivroStatus;
+
 public class Livro {
     private int id;
     private int idUsuario;
@@ -8,13 +10,13 @@ public class Livro {
     private String condicaoEstado;
     private double precoCreditos;
     private String fotoCapa;
-    private LivroStatus status;
+    private LivroStatus statusLivro;
 
     public Livro(){
         // (o゜▽゜)o☆
     }
 
-    public Livro(int id, int idUsuario, String titulo, String autor, String condicaoEstado, double precoCreditos, String fotoCapa, LivroStatus status) {
+    public Livro(int id, int idUsuario, String titulo, String autor, String condicaoEstado, double precoCreditos, String fotoCapa, LivroStatus statusLivro) {
         this.id = id;
         this.idUsuario = idUsuario;
         this.titulo = titulo;
@@ -22,17 +24,17 @@ public class Livro {
         this.condicaoEstado = condicaoEstado;
         this.precoCreditos = precoCreditos;
         this.fotoCapa = fotoCapa;
-        this.status = status;
+        this.statusLivro = statusLivro;
     }
 
-    public Livro(int idUsuario, String titulo, String autor, String condicaoEstado, double precoCreditos, String fotoCapa, LivroStatus status) {
+    public Livro(int idUsuario, String titulo, String autor, String condicaoEstado, double precoCreditos, String fotoCapa, LivroStatus statusLivro) {
         this.idUsuario = idUsuario;
         this.titulo = titulo;
         this.autor = autor;
         this.condicaoEstado = condicaoEstado;
         this.precoCreditos = precoCreditos;
         this.fotoCapa = fotoCapa;
-        this.status = LivroStatus.DISPONIVEL;
+        this.statusLivro = LivroStatus.DISPONIVEL;
     }
 
     public int getId() {
@@ -91,11 +93,11 @@ public class Livro {
         this.fotoCapa = fotoCapa;
     }
 
-    public LivroStatus getStatus() {
-        return status;
+    public LivroStatus getStatusLivro() {
+        return statusLivro;
     }
 
-    public void setStatus(LivroStatus status) {
-        this.status = status;
+    public void setStatusLivro(LivroStatus statusLivro) {
+        this.statusLivro = statusLivro;
     }
 }

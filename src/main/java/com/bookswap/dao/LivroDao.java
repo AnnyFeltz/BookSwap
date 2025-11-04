@@ -9,7 +9,7 @@ import java.util.List;
 
 import com.bookswap.database.DatabaseConnection; // Assumindo que você tem essa classe
 import com.bookswap.models.Livro;
-import com.bookswap.models.LivroStatus;
+import com.bookswap.models.subModels.LivroStatus;
 import com.bookswap.repository.ILivroRepository;
 
 public class LivroDao implements ILivroRepository{
@@ -17,10 +17,10 @@ public class LivroDao implements ILivroRepository{
     private static final String TABLE_NAME = "livros_bs";
 
     private static final String SELECT_ALL_FIELDS = 
-        "idLivro, idUsuario, titulo, autor, condicao_estado, preco_creditos, foto_capa, status_troca";
+        "idLivro, idUsuario, titulo, autor, condicao_estado, preco_creditos, foto_capa, status_livro";
     
     private static final String INSERT_FIELDS = 
-        "idUsuario, titulo, autor, condicao_estado, preco_creditos, foto_capa, status_troca";
+        "idUsuario, titulo, autor, condicao_estado, preco_creditos, foto_capa, status_livro";
 
     private Livro mapLivro(ResultSet rs) throws SQLException {
         Livro livro = new Livro();
@@ -32,7 +32,7 @@ public class LivroDao implements ILivroRepository{
         livro.setPrecoCreditos(rs.getDouble("preco_creditos"));
         livro.setFotoCapa(rs.getString("foto_capa"));
         
-        livro.setStatusTroca(LivroStatus.valueOf(rs.getString("status_troca").toUpperCase()));
+        livro.setStatusLivro(LivroStatus.valueOf(rs.getString("status_livro").toUpperCase()));
         
         return livro;
     }
@@ -53,7 +53,7 @@ public class LivroDao implements ILivroRepository{
             stmt.setString(i++, livro.getFotoCapa());
             
             // Mapeamento do ENUM
-            stmt.setString(i++, livro.getStatus().name()); 
+            stmt.setString(i++, livro.getStatusLivro().name()); 
             
             stmt.executeUpdate();
 
@@ -126,7 +126,7 @@ public class LivroDao implements ILivroRepository{
     @Override
     public List<Livro> findAllAvailable() {
         List<Livro> livros = new ArrayList<>();
-        String sql = "SELECT " + SELECT_ALL_FIELDS + " FROM " + TABLE_NAME + " WHERE status_troca = ?"; 
+        String sql = "SELECT " + SELECT_ALL_FIELDS + " FROM " + TABLE_NAME + " WHERE status_livro = ?"; 
         
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -146,7 +146,7 @@ public class LivroDao implements ILivroRepository{
 
     @Override
     public void update(Livro livro) {
-        String sql = "UPDATE " + TABLE_NAME + " SET titulo = ?, autor = ?, condicao_estado = ?, preco_creditos = ?, foto_capa = ?, status_troca = ? WHERE idLivro = ?";
+        String sql = "UPDATE " + TABLE_NAME + " SET titulo = ?, autor = ?, condicao_estado = ?, preco_creditos = ?, foto_capa = ?, status_livro = ? WHERE idLivro = ?";
 
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -157,7 +157,7 @@ public class LivroDao implements ILivroRepository{
             stmt.setString(i++, livro.getCondicaoEstado());
             stmt.setDouble(i++, livro.getPrecoCreditos());
             stmt.setString(i++, livro.getFotoCapa());
-            stmt.setString(i++, livro.getStatus().name());
+            stmt.setString(i++, livro.getStatusLivro().name());
             
             stmt.setInt(i++, livro.getId()); 
             stmt.executeUpdate();
