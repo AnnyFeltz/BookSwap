@@ -3,7 +3,7 @@ package com.bookswap.repository;
 import com.bookswap.dao.LivroDao;
 import com.bookswap.models.Livro;
 
-public class LivroRepository {
+public class LivroRepository implements ILivroRepository {
     
     private final LivroDao livroDao;
 
