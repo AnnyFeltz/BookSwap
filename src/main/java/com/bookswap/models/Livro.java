@@ -27,7 +27,7 @@ public class Livro {
         this.statusLivro = statusLivro;
     }
 
-    public Livro(int idUsuario, String titulo, String autor, String condicaoEstado, double precoCreditos, String fotoCapa, LivroStatus statusLivro) {
+    public Livro(int idUsuario, String titulo, String autor, String condicaoEstado, double precoCreditos, String fotoCapa) {
         this.idUsuario = idUsuario;
         this.titulo = titulo;
         this.autor = autor;

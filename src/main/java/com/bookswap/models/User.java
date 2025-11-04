@@ -20,7 +20,6 @@ public class User {
         // ... codigo? nop construtor vazio padrão ヾ(⌐■_■)ノ♪
     }
 
-    //inteiro
     public User(int id, String nome, String email, String senha, LocalDateTime dataRegistro, UserRole role, UserStatus status, String fotoPerfil, String localizacao) {
         this.id = id;
         this.nome = nome;
@@ -33,7 +32,6 @@ public class User {
         this.localizacao = localizacao;
     }
 
-    //pra autenticação
     public User( String nome, String email, String senha) {
         this.nome = nome;
         this.email = email;
@@ -45,7 +43,6 @@ public class User {
         this.localizacao = null;
     }
 
-    //getters and setters
     public int getId() {
         return id;
     }
