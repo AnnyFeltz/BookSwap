@@ -8,46 +8,41 @@ public class User {
     private String email;
     private String senha; 
     private LocalDateTime dataRegistro;
-    private UserRole perfil; 
-    private int creditosDisponiveis;
-    private PenaltyStatus statusPenalidade;
-    private String motivoPenalidade;
-    private LocalDateTime dataInicioPenalidade;
-    private LocalDateTime dataFimPenalidade;
-    private String fotoPerfilUrl;
+    private UserRole role; 
+    private UserStatus status;
+    private String fotoPerfil;
+    private String localizacao;
 
-    public User(int id, String nome, String email, String senha, LocalDateTime dataRegistro, UserRole perfil, int creditosDisponiveis, PenaltyStatus statusPenalidade, String motivoPenalidade, LocalDateTime dataInicioPenalidade, LocalDateTime dataFimPenalidade, String fotoPerfilUrl) {
+    public User(){
+        // ... codigo? nop construtor vazio padrão ヾ(⌐■_■)ノ♪
+    }
+
+    //inteiro
+    public User(int id, String nome, String email, String senha, LocalDateTime dataRegistro, UserRole role, UserStatus status, String fotoPerfil, String localizacao) {
         this.id = id;
         this.nome = nome;
         this.email = email;
-        this.senha = senha;
+        this.senha  = senha ;
         this.dataRegistro = dataRegistro;
-        this.perfil = perfil;
-        this.creditosDisponiveis = creditosDisponiveis;
-        this.statusPenalidade = statusPenalidade;
-        this.motivoPenalidade = motivoPenalidade;
-        this.dataInicioPenalidade = dataInicioPenalidade;
-        this.dataFimPenalidade = dataFimPenalidade;
-        this.fotoPerfilUrl = fotoPerfilUrl;
+        this.role  = role ;
+        this.status = status;
+        this.fotoPerfil = fotoPerfil;
+        this.localizacao = localizacao;
     }
 
-    public User(String nome, String email, String senha) {
+    //pra autenticação
+    public User( String nome, String email, String senha) {
         this.nome = nome;
         this.email = email;
-        this.senha = senha;
+        this.senha  = senha ;
         this.dataRegistro = LocalDateTime.now();
-        this.perfil = UserRole.USUARIO;
-        this.creditosDisponiveis = 0; 
-        this.statusPenalidade = PenaltyStatus.ATIVO;
-        this.motivoPenalidade = null;
-        this.dataInicioPenalidade = null;
-        this.dataFimPenalidade = null;
-        this.fotoPerfilUrl = null;
+        this.role  = UserRole.USUARIO ;
+        this.status = UserStatus.ATIVO;
+        this.fotoPerfil = null;
+        this.localizacao = null;
     }
 
-    public User() {
-    }
-
+    //getters and setters
     public int getId() {
         return id;
     }
@@ -88,76 +83,36 @@ public class User {
         this.dataRegistro = dataRegistro;
     }
 
-    public UserRole getPerfil() {
-        return perfil;
+    public UserRole getRole() {
+        return role;
     }
 
-    public void setPerfil(UserRole perfil) {
-        this.perfil = perfil;
+    public void setRole(UserRole role) {
+        this.role = role;
     }
 
-    public int getCreditosDisponiveis() {
-        return creditosDisponiveis;
+    public String getFotoPerfil() {
+        return fotoPerfil;
     }
 
-    public void setCreditosDisponiveis(int creditosDisponiveis) {
-        this.creditosDisponiveis = creditosDisponiveis;
+    public void setFotoPerfil(String fotoPerfil) {
+        this.fotoPerfil = fotoPerfil;
     }
 
-    public PenaltyStatus getStatusPenalidade() {
-        return statusPenalidade;
+    public String getLocalizacao() {
+        return localizacao;
     }
 
-    public void setStatusPenalidade(PenaltyStatus statusPenalidade) {
-        this.statusPenalidade = statusPenalidade;
+    public void setLocalizacao(String localizacao) {
+        this.localizacao = localizacao;
     }
 
-    public String getMotivoPenalidade() {
-        return motivoPenalidade;
+    public UserStatus getStatus() {
+        return status;
     }
 
-    public void setMotivoPenalidade(String motivoPenalidade) {
-        this.motivoPenalidade = motivoPenalidade;
-    }
-
-    public LocalDateTime getDataInicioPenalidade() {
-        return dataInicioPenalidade;
-    }
-
-    public void setDataInicioPenalidade(LocalDateTime dataInicioPenalidade) {
-        this.dataInicioPenalidade = dataInicioPenalidade;
-    }
-
-    public LocalDateTime getDataFimPenalidade() {
-        return dataFimPenalidade;
-    }
-
-    public void setDataFimPenalidade(LocalDateTime dataFimPenalidade) {
-        this.dataFimPenalidade = dataFimPenalidade;
-    }
-    
-    public String getFotoPerfilUrl() {
-        return fotoPerfilUrl;
-    }
-
-    public void setFotoPerfilUrl(String fotoPerfilUrl) {
-        this.fotoPerfilUrl = fotoPerfilUrl;
-    }
-
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", nome='" + nome + '\'' +
-                ", email='" + email + '\'' +
-                ", dataRegistro=" + dataRegistro +
-                ", perfil=" + perfil +
-                ", creditosDisponiveis=" + creditosDisponiveis +
-                ", statusPenalidade=" + statusPenalidade +
-                (statusPenalidade != PenaltyStatus.ATIVO ? ", motivoPenalidade='" + motivoPenalidade + '\'' +
-                                                         ", dataInicioPenalidade=" + dataInicioPenalidade +
-                                                         ", dataFimPenalidade=" + dataFimPenalidade : "") +
-                ", fotoPerfilUrl='" + fotoPerfilUrl + '\'' +
-                '}';
+    public void setStatus(UserStatus status) {
+        this.status = status;
     }
 }
+

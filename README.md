@@ -136,8 +136,9 @@ CREATE TABLE usuarios_bs (
     email VARCHAR(45) NOT NULL UNIQUE, 
     senha VARCHAR(45) NOT NULL, 
     
-    role VARCHAR(45) NOT NULL,
-    status VARCHAR(45) NOT NULL,
+    role ENUM('USUARIO', 'MODERADOR') NOT NULL, 
+    
+    status ENUM('ATIVO','INATIVO','BANIDO','SUSPENSO') NOT NULL,
     
     foto_perfil VARCHAR(255) NULL, 
     localizacao VARCHAR(45) NULL, 
