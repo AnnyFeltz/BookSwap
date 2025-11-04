@@ -1,5 +1,7 @@
 package com.bookswap.controllers;
 
+import java.time.LocalDateTime;
+
 import org.mindrot.jbcrypt.BCrypt;
 
 import com.bookswap.models.User;
@@ -14,7 +16,6 @@ public class AuthenticationController {
     }
 
     public void register(Context ctx) {
-        // variaveis
         String nome = ctx.formParam("nome");
         String email = ctx.formParam("email");
         String senha = ctx.formParam("senha");
@@ -32,16 +33,13 @@ public class AuthenticationController {
         String hashedSenha = BCrypt.hashpw(senha, BCrypt.gensalt());
 
         User newUser = new User(nome, email, hashedSenha);
-        
-        newUser.setSenha(hashedSenha); 
-        
+                
         userRepository.save(newUser);
 
         ctx.redirect("/login");
     }
 
     public void login(Context ctx) {
-        // variaveis
         String email = ctx.formParam("email");
         String senha = ctx.formParam("senha");
 

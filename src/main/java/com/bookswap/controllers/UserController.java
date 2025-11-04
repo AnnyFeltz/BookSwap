@@ -84,7 +84,6 @@ public class UserController {
 
         UploadedFile file = ctx.uploadedFile("foto");
 
-        // CORREÇÃO AQUI: Troque getContentType() por contentType()
         if (file == null || file.contentType() == null || !file.contentType().startsWith("image")) {
             ctx.status(400).result("Nenhum arquivo de imagem válido enviado.");
             return;
@@ -93,7 +92,7 @@ public class UserController {
         try {
             String newUrl = imgbbService.uploadImage(file);
             
-            user.setFotoPerfilUrl(newUrl);
+            user.setFotoPerfil(newUrl);
             
             userRepository.update(user);
             ctx.sessionAttribute("user", user);
