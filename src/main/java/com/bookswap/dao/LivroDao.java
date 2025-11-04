@@ -102,6 +102,28 @@ public class LivroDao implements ILivroRepository{
     }
 
     @Override
+    public List<Livro> findByTitulo(String titulo) {
+        List<Livro> livros = new ArrayList<>();
+        String sql = "SELECT " + SELECT_ALL_FIELDS + " FROM " + TABLE_NAME + " WHERE titulo LIKE ?";
+        
+        try (Connection conn = DatabaseConnection.getConnection();
+            PreparedStatement stmt = conn.prepareStatement(sql)) {
+            
+            stmt.setString(1, "%" + titulo + "%"); 
+            
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                livros.add(mapLivro(rs));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return livros;
+    }
+
+    @Override
     public List<Livro> findAllAvailable() {
         List<Livro> livros = new ArrayList<>();
         String sql = "SELECT " + SELECT_ALL_FIELDS + " FROM " + TABLE_NAME + " WHERE status_troca = ?"; 
