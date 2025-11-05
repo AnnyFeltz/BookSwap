@@ -2,12 +2,15 @@ package com.bookswap.controllers;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import com.bookswap.models.Credito;
 import com.bookswap.models.User;
+import com.bookswap.models.Livro;
 import com.bookswap.repository.CreditoRepository;
 import com.bookswap.repository.UserRepository;
+import com.bookswap.repository.LivroRepository;
 
 import io.javalin.http.Context;
 import io.javalin.http.UploadedFile;
@@ -18,11 +21,13 @@ public class UserController {
     private final UserRepository userRepository;
     private final ImgbbService imgbbService;
     private final CreditoRepository creditoRepository;
+    private final LivroRepository livroRepository;
 
     public UserController() {
         this.userRepository = new UserRepository();
         this.imgbbService = new ImgbbService(); 
         this.creditoRepository = new CreditoRepository();
+        this.livroRepository = new LivroRepository();
     }
 
     public void verPerfil(Context ctx) {
@@ -48,9 +53,12 @@ public class UserController {
             saldo = credito.getSaldoAtual();
         }
 
+        List<Livro> livrosDoUsuario = livroRepository.findAvailableByUserId(userAtualizado.getId());
+
         Map<String, Object> model = new HashMap<>();
         model.put("user", userAtualizado);
         model.put("saldo_usuario", saldo);
+        model.put("livrosPraTroca", livrosDoUsuario);
         
         ctx.render("profile.ftl", model);
     }
