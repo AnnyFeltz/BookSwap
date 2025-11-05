@@ -1,3 +1,4 @@
+
 package com.bookswap.dao;
 
 import java.sql.Connection;
@@ -12,6 +13,7 @@ import com.bookswap.database.DatabaseConnection;
 import com.bookswap.models.Livro;
 import com.bookswap.models.subModels.LivroStatus;
 import com.bookswap.repository.ILivroRepository;
+
 
 public class LivroDao implements ILivroRepository {
 
@@ -133,6 +135,30 @@ public class LivroDao implements ILivroRepository {
         try (Connection conn = DatabaseConnection.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setString(1, LivroStatus.DISPONIVEL.name());
+            ResultSet rs = stmt.executeQuery();
+
+            while (rs.next()) {
+                livros.add(mapLivro(rs));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return livros;
+    }
+
+    @Override
+    public List<Livro> findAvailableByUserId(int idUsuario) {
+        List<Livro> livros = new ArrayList<>();
+        String sql = "SELECT " + SELECT_ALL_FIELDS + " FROM " + TABLE_NAME 
+                   + " WHERE idUsuario_proprietario = ? AND status_livro = ?";
+        
+        try (Connection conn = DatabaseConnection.getConnection(); 
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, idUsuario);
+            stmt.setString(2, LivroStatus.DISPONIVEL.name()); 
+            
             ResultSet rs = stmt.executeQuery();
 
             while (rs.next()) {

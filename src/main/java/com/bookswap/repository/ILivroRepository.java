@@ -9,6 +9,7 @@ public interface ILivroRepository {
     List<Livro> findByIdUsuario(int idUsuario);
     List<Livro> findByTitulo(String titulo);
     List<Livro> findAllAvailable();
+    List<Livro> findAvailableByUserId(int idUsuario);
     void save(Livro livro);
     void update(Livro livro);
     void delete(int id);

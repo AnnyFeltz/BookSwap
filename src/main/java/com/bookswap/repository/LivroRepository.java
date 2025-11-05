@@ -34,6 +34,11 @@ public class LivroRepository implements ILivroRepository {
     }
 
     @Override
+    public List<Livro> findAvailableByUserId(int idUsuario){
+        return livroDao.findAvailableByUserId(idUsuario);
+    }
+
+    @Override
     public void save(Livro livro) {
         livroDao.save(livro);
     }

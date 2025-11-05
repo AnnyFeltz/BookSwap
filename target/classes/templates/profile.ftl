@@ -97,6 +97,7 @@
                 <div id="meus-livros" class="tab-content">
                     <h3>Livros que você está oferecendo para troca:</h3>
                     <div class="book-grid profile-book-grid">
+                    
                         </div>
                 </div>
 

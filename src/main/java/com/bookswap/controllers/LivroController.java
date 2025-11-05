@@ -68,6 +68,7 @@ public class LivroController {
         }
     }
 
+    // ... dentro de LivroController.java
     public void verLivro(Context ctx) {
         User user = ctx.sessionAttribute("user");
         
@@ -88,6 +89,10 @@ public class LivroController {
 
             User dono = userRepository.findById(livro.getIdUsuario());
 
+            // 🌟 NOVO: Adicione esta linha para buscar os livros disponíveis do usuário logado
+            List<Livro> meusLivrosDisponiveis = livroRepository.findAvailableByUserId(user.getId()); // *Assumindo que você tem este método no LivroRepository*
+            // 🌟 FIM NOVO
+
             Map<String, Object> model = new HashMap<>();
             model.put("livro", livro);
             model.put("dono", dono);
@@ -95,12 +100,17 @@ public class LivroController {
             model.put("isDono", livro.getIdUsuario() == user.getId());
             model.put("creditosUsuario", new CreditoController().getSaldo(user.getId()));
             
-            ctx.render("livro.ftl", model);
-
+            // 🌟 NOVO: Adicione esta linha ao modelo
+            model.put("meusLivrosDisponiveis", meusLivrosDisponiveis); 
+            // 🌟 FIM NOVO
+            
+            ctx.render("livro.ftl", model); // Note que o arquivo é livro.ftl
+            
         } catch (NumberFormatException e) {
             ctx.status(400).result("ID do livro inválido.");
         }
     }
+// ...
 
     public void editarLivro(Context ctx) {
         User user = ctx.sessionAttribute("user");
