@@ -27,7 +27,13 @@
     <div class="dashboard-toolbar">
       <h2 style="background-color: white; border-radius: 100px; padding: 1vh 2vw;">
         Explore os Livros Disponíveis
+        <#if livrosDisponiveis??>
+          <p>Total de livros encontrados: ${livrosDisponiveis?size}</p>
+        <#else>
+          <p>Total de livros encontrados: 0</p>
+        </#if>
       </h2>
+
       <div class="search-container">
         <input type="text" class="search-input" placeholder="Buscar por título, autor ou ISBN...">
         <button class="filter-btn">
@@ -41,7 +47,7 @@
     </div>
 
     <div class="book-grid">
-      <#if livrosDisponiveis?has_content>
+      <#if livrosDisponiveis?? && livrosDisponiveis?has_content>
         <#list livrosDisponiveis as livro>
           <a href="/livro/${livro.id}" class="book-card-link">
             <div class="book-cover">
@@ -61,6 +67,32 @@
         <p>Nenhum livro disponível para troca no momento. Cadastre o seu!</p>
       </#if>
     </div>
+
+    <h1>Debug: Template carregado!</h1>
+    <p>Tamanho da lista: ${livrosDisponiveis?size!0}</p>
+
+
+    <h2>📚 Livros disponíveis</h2>
+
+    <div class="dashboard">
+      <h1>Bem-vindo ao BookSwap</h1>
+      <section class="livros">
+          <#if livrosDisponiveis?? && livrosDisponiveis?size > 0>
+              <div class="livros-grid">
+                  <#list livrosDisponiveis as livro>
+                      <div class="card-livro">
+                          <h3>${livro.titulo}</h3>
+                          <p>Status: ${livro.statusLivro}</p>
+                      </div>
+                  </#list>
+              </div>
+          <#else>
+              <p>Nenhum livro disponível no momento 😢</p>
+          </#if>
+      </section>
+  </div>
+
+
 
   </main>
 
