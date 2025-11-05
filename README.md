@@ -133,15 +133,15 @@ CREATE TABLE usuarios_bs (
     idUsuario INT AUTO_INCREMENT PRIMARY KEY,
     
     nome VARCHAR(255) NOT NULL,
-    email VARCHAR(45) NOT NULL UNIQUE, 
-    senha VARCHAR(45) NOT NULL, 
+    email VARCHAR(100) NOT NULL UNIQUE, 
+    senha VARCHAR(100) NOT NULL, 
     
     role ENUM('USUARIO', 'MODERADOR') NOT NULL, 
     
     status ENUM('ATIVO','INATIVO','BANIDO','SUSPENSO') NOT NULL,
     
     foto_perfil VARCHAR(255) NULL, 
-    localizacao VARCHAR(45) NULL, 
+    localizacao VARCHAR(500) NULL, 
 
     data_registro TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP
 );

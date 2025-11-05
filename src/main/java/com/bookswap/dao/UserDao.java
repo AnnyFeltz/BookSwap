@@ -20,7 +20,7 @@ public class UserDao implements IUserRepository {
         "idUsuario, nome, email, senha, data_registro, role, status, foto_perfil, localizacao";
         
     private static final String INSERT_FIELDS = 
-        "nome, email, senha, role, status, foto_perfil, localizacao";
+        "nome, email, senha, role, status, foto_perfil, localizacao, data_registro";
 
     private User mapUser(ResultSet rs) throws SQLException {
         User user = new User();
@@ -83,10 +83,10 @@ public class UserDao implements IUserRepository {
     
     @Override
     public void save(User user) {
-        String sql = "INSERT INTO " + TABLE_NAME + " (" + INSERT_FIELDS + ") VALUES (?,?,?,?,?,?,?)";
+        String sql = "INSERT INTO " + TABLE_NAME + " (" + INSERT_FIELDS + ") VALUES (?,?,?,?,?,?,?,?)"; 
 
         try (Connection conn = DatabaseConnection.getConnection();
-             PreparedStatement stmt = conn.prepareStatement(sql)) {
+             PreparedStatement stmt = conn.prepareStatement(sql, PreparedStatement.RETURN_GENERATED_KEYS)) {
 
             int i = 1;
             stmt.setString(i++, user.getNome());
@@ -98,9 +98,16 @@ public class UserDao implements IUserRepository {
             
             stmt.setString(i++, user.getFotoPerfil()); 
             stmt.setString(i++, user.getLocalizacao()); 
+
+            stmt.setTimestamp(i++, Timestamp.valueOf(user.getDataRegistro())); 
             
             stmt.executeUpdate();
-
+            
+            try (ResultSet rs = stmt.getGeneratedKeys()) {
+                if (rs.next()) {
+                    user.setId(rs.getInt(1)); 
+                }
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }

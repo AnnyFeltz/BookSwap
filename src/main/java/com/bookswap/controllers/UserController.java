@@ -4,7 +4,9 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.bookswap.models.Credito;
 import com.bookswap.models.User;
+import com.bookswap.repository.CreditoRepository;
 import com.bookswap.repository.UserRepository;
 
 import io.javalin.http.Context;
@@ -14,10 +16,12 @@ public class UserController {
 
     private final UserRepository userRepository;
     private final ImgbbService imgbbService;
+    private final CreditoRepository creditoRepository;
 
     public UserController() {
         this.userRepository = new UserRepository();
         this.imgbbService = new ImgbbService();
+        this.creditoRepository = new CreditoRepository();
     }
 
     public void verPerfil(Context ctx) {
@@ -28,8 +32,17 @@ public class UserController {
             return;
         }
 
+        Credito credito = creditoRepository.findByIdUsuario(user.getId());
+
+        double saldo = 0.0;
+
+        if (credito != null){
+            saldo = credito.getSaldoAtual();
+        }
+
         Map<String, Object> model = new HashMap<>();
         model.put("user", user);
+        model.put("saldo_usuario", saldo);
         
         ctx.render("profile.ftl", model);
     }

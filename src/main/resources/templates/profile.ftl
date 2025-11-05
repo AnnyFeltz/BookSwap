@@ -23,11 +23,11 @@
         <div class="profile-card">
             <div class="profile-header">
                 <h2>Meu Perfil</h2>
-                <div class="credits-system"><span>★</span><span>${user.creditosDisponiveis?c} pts</span></div>
+                <div class="credits-system"><span>★</span><span>${saldo_usuario?c} pts</span></div>
             </div>
             <div class="user-info-section">
                 <div class="profile-pic">
-                    <#assign fotoUrl = user.getFotoPerfilUrl()!>
+                    <#assign fotoUrl = user.fotoPerfil!>
                     <#if fotoUrl?has_content>
                         <img src="${fotoUrl}" alt="Foto de Perfil">
                     <#else>

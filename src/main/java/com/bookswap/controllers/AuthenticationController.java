@@ -2,15 +2,19 @@ package com.bookswap.controllers;
 
 import org.mindrot.jbcrypt.BCrypt;
 
+import com.bookswap.models.Credito;
 import com.bookswap.models.User;
+import com.bookswap.repository.CreditoRepository;
 import com.bookswap.repository.UserRepository;
 
 import io.javalin.http.Context;
 public class AuthenticationController { 
     private final UserRepository userRepository;
+    private final CreditoRepository creditoRepository;
 
     public AuthenticationController () {
         this.userRepository = new UserRepository();
+        this.creditoRepository = new CreditoRepository();
     }
 
     public void register(Context ctx) {
@@ -30,9 +34,16 @@ public class AuthenticationController {
 
         String hashedSenha = BCrypt.hashpw(senha, BCrypt.gensalt());
 
-        User newUser = new User(nome, email, hashedSenha);
+        User novoUser = new User(nome, email, hashedSenha);
                 
-        userRepository.save(newUser);
+        userRepository.save(novoUser);
+
+        Credito novoCredito = new Credito();
+
+        novoCredito.setIdUsuario(novoUser.getId());
+        novoCredito.setSaldoAtual(0);
+
+        creditoRepository.save(novoCredito);
 
         ctx.redirect("/login");
     }
