@@ -1,6 +1,5 @@
 package com.bookswap;
 
-import com.bookswap.controllers.DashboardController;
 import com.bookswap.controllers.AuthenticationController;
 import com.bookswap.controllers.LivroController;
 import com.bookswap.controllers.TrocaController;
@@ -47,7 +46,6 @@ public class App {
         UserController userController = new UserController();
         LivroController livroController = new LivroController();
         TrocaController trocaController = new TrocaController();
-        DashboardController dashboardController = new DashboardController();
         
 
         app.get("/register", ctx -> ctx.render("register.ftl"));
@@ -65,9 +63,9 @@ public class App {
         app.get("/perfil/senha", ctx -> ctx.render("mudarSenha.ftl"));
         app.post("/perfil/senha", userController::atualizarSenha); 
 
-        app.get("/", dashboardController::mostrarDashboard);
-        
         app.get("/livros", livroController::listarTodosLivros);
+
+        app.get("/", new LivroController()::listarTodosLivros);
 
         app.get("/livro/cadastrar", ctx -> ctx.render("criar_livro.ftl"));
         app.post("/livro/cadastrar", livroController::cadastrarLivro);

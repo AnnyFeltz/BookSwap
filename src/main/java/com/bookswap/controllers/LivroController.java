@@ -215,19 +215,25 @@ public class LivroController {
     }
     
     public void listarTodosLivros(Context ctx) {
-        User user = ctx.sessionAttribute("user");
+    User user = ctx.sessionAttribute("user");
 
-        if (user == null){
-            ctx.redirect("/login");
-            return;
-        }
-        
+    if (user == null){
+        ctx.redirect("/login");
+        return;
+    }
+    
+    try {
         List<Livro> livrosDisponiveis = livroRepository.findAllAvailable();
-        
+
         Map<String, Object> model = new HashMap<>();
         model.put("livrosDisponiveis", livrosDisponiveis);
         model.put("userLogado", user);
         
-        ctx.render("index.ftl", model);
+        ctx.render("index.ftl", model); 
+        
+    } catch (Exception e) {
+        e.printStackTrace();
+        ctx.status(500).result("Erro interno ao carregar a dashboard 😢. Verifique o LivroRepository.");
     }
+}
 }

@@ -1,4 +1,3 @@
-
 package com.bookswap.dao;
 
 import java.sql.Connection;
@@ -66,6 +65,7 @@ public class LivroDao implements ILivroRepository {
 
         } catch (SQLException e) {
             e.printStackTrace();
+            throw new RuntimeException("Falha ao salvar livro: erro de banco de dados.", e); 
         }
     }
 
@@ -83,6 +83,7 @@ public class LivroDao implements ILivroRepository {
 
         } catch (SQLException e) {
             e.printStackTrace();
+            throw new RuntimeException("Falha ao buscar livro por ID: erro de banco de dados.", e);
         }
         return null;
     }
@@ -102,6 +103,7 @@ public class LivroDao implements ILivroRepository {
 
         } catch (SQLException e) {
             e.printStackTrace();
+            throw new RuntimeException("Falha ao buscar livros por usuário: erro de banco de dados.", e);
         }
         return livros;
     }
@@ -123,6 +125,7 @@ public class LivroDao implements ILivroRepository {
 
         } catch (SQLException e) {
             e.printStackTrace();
+            throw new RuntimeException("Falha ao buscar livros por título: erro de banco de dados.", e);
         }
         return livros;
     }
@@ -143,6 +146,7 @@ public class LivroDao implements ILivroRepository {
 
         } catch (SQLException e) {
             e.printStackTrace();
+            throw new RuntimeException("Falha ao buscar livros disponíveis: erro de banco de dados.", e); 
         }
         return livros;
     }
@@ -151,7 +155,7 @@ public class LivroDao implements ILivroRepository {
     public List<Livro> findAvailableByUserId(int idUsuario) {
         List<Livro> livros = new ArrayList<>();
         String sql = "SELECT " + SELECT_ALL_FIELDS + " FROM " + TABLE_NAME 
-                   + " WHERE idUsuario_proprietario = ? AND status_livro = ?";
+                        + " WHERE idUsuario_proprietario = ? AND status_livro = ?";
         
         try (Connection conn = DatabaseConnection.getConnection(); 
              PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -167,6 +171,7 @@ public class LivroDao implements ILivroRepository {
 
         } catch (SQLException e) {
             e.printStackTrace();
+            throw new RuntimeException("Falha ao buscar livros disponíveis do usuário: erro de banco de dados.", e);
         }
         return livros;
     }
@@ -190,6 +195,7 @@ public class LivroDao implements ILivroRepository {
 
         } catch (SQLException e) {
             e.printStackTrace();
+            throw new RuntimeException("Falha ao atualizar livro: erro de banco de dados.", e);
         }
     }
 
@@ -201,6 +207,7 @@ public class LivroDao implements ILivroRepository {
             stmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
+            throw new RuntimeException("Falha ao deletar livro: erro de banco de dados.", e);
         }
     }
 }
