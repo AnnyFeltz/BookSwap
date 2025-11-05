@@ -1,6 +1,6 @@
 package com.bookswap.controllers;
 
-import java.io.IOException; 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -12,18 +12,18 @@ import com.bookswap.repository.LivroRepository;
 import com.bookswap.repository.UserRepository;
 
 import io.javalin.http.Context;
-import io.javalin.http.UploadedFile; 
+import io.javalin.http.UploadedFile;
 
 public class LivroController {
 
     private final LivroRepository livroRepository;
     private final UserRepository userRepository;
-    private final ImgbbService imgbbService; 
+    private final ImgbbService imgbbService;
 
     public LivroController() {
         this.livroRepository = new LivroRepository();
         this.userRepository = new UserRepository();
-        this.imgbbService = new ImgbbService(); 
+        this.imgbbService = new ImgbbService();
     }
 
     public void cadastrarLivro(Context ctx) {
@@ -33,12 +33,12 @@ public class LivroController {
             ctx.status(401).result("Acesso não autorizado. Faça login novamente");
             return;
         }
-        
+
         String titulo = ctx.formParam("titulo");
-        String autor = ctx.formParam("autor"); 
-        String estadoCondicao = ctx.formParam("estadoCondicao"); 
-        String precoCreditosStr = ctx.formParam("precoCreditos"); 
-        UploadedFile fotoFile = ctx.uploadedFile("fotoCapa"); 
+        String autor = ctx.formParam("autor");
+        String estadoCondicao = ctx.formParam("estadoCondicao");
+        String precoCreditosStr = ctx.formParam("precoCreditos");
+        UploadedFile fotoFile = ctx.uploadedFile("fotoCapa");
 
         if (titulo == null || titulo.isEmpty() || autor == null || autor.isEmpty() || estadoCondicao == null || estadoCondicao.isEmpty() || precoCreditosStr == null || precoCreditosStr.isEmpty() || fotoFile == null || fotoFile.contentType() == null || !fotoFile.contentType().startsWith("image")) {
             ctx.status(400).result("Todos os campos de livro, incluindo a imagem, são obrigatórios e devem ser válidos.");
@@ -52,11 +52,11 @@ public class LivroController {
                 ctx.status(400).result("O preço em créditos deve ser maior que zero.");
                 return;
             }
-            
+
             String fotoUrl = imgbbService.uploadImage(fotoFile);
-            
+
             Livro novoLivro = new Livro(user.getId(), titulo, autor, estadoCondicao, precoCreditos, fotoUrl);
-            
+
             livroRepository.save(novoLivro);
 
             ctx.redirect("/livro/" + novoLivro.getId() + "?msg=livro_cadastrado");
@@ -68,20 +68,19 @@ public class LivroController {
         }
     }
 
-    // ... dentro de LivroController.java
     public void verLivro(Context ctx) {
         User user = ctx.sessionAttribute("user");
-        
+
         if (user == null) {
             ctx.redirect("/login");
             return;
         }
-        
+
         try {
             int livroId = Integer.parseInt(ctx.pathParam("id"));
-            
+
             Livro livro = livroRepository.findById(livroId);
-            
+
             if (livro == null) {
                 ctx.status(404).result("Livro não encontrado.");
                 return;
@@ -89,9 +88,7 @@ public class LivroController {
 
             User dono = userRepository.findById(livro.getIdUsuario());
 
-            // 🌟 NOVO: Adicione esta linha para buscar os livros disponíveis do usuário logado
-            List<Livro> meusLivrosDisponiveis = livroRepository.findAvailableByUserId(user.getId()); // *Assumindo que você tem este método no LivroRepository*
-            // 🌟 FIM NOVO
+            List<Livro> meusLivrosDisponiveis = livroRepository.findAvailableByUserId(user.getId());
 
             Map<String, Object> model = new HashMap<>();
             model.put("livro", livro);
@@ -99,18 +96,15 @@ public class LivroController {
             model.put("userLogado", user);
             model.put("isDono", livro.getIdUsuario() == user.getId());
             model.put("creditosUsuario", new CreditoController().getSaldo(user.getId()));
-            
-            // 🌟 NOVO: Adicione esta linha ao modelo
-            model.put("meusLivrosDisponiveis", meusLivrosDisponiveis); 
-            // 🌟 FIM NOVO
-            
-            ctx.render("livro.ftl", model); // Note que o arquivo é livro.ftl
-            
+
+            model.put("meusLivrosDisponiveis", meusLivrosDisponiveis);
+
+            ctx.render("livroPraTroca.ftl", model);
+
         } catch (NumberFormatException e) {
             ctx.status(400).result("ID do livro inválido.");
         }
     }
-// ...
 
     public void editarLivro(Context ctx) {
         User user = ctx.sessionAttribute("user");
@@ -122,7 +116,7 @@ public class LivroController {
 
         try {
             int livroId = Integer.parseInt(ctx.pathParam("id"));
-            
+
             Livro livro = livroRepository.findById(livroId);
 
             if (livro == null) {
@@ -134,25 +128,25 @@ public class LivroController {
                 ctx.status(403).result("Você não tem permissão para editar este livro.");
                 return;
             }
-            
+
             String titulo = ctx.formParam("titulo");
-            String autor = ctx.formParam("autor"); 
-            String estadoCondicao = ctx.formParam("estadoCondicao"); 
-            String precoCreditosStr = ctx.formParam("precoCreditos"); 
-            UploadedFile fotoFile = ctx.uploadedFile("fotoCapa"); 
+            String autor = ctx.formParam("autor");
+            String estadoCondicao = ctx.formParam("estadoCondicao");
+            String precoCreditosStr = ctx.formParam("precoCreditos");
+            UploadedFile fotoFile = ctx.uploadedFile("fotoCapa");
 
             if (titulo == null || titulo.isEmpty() || autor == null || autor.isEmpty() || estadoCondicao == null || estadoCondicao.isEmpty() || precoCreditosStr == null || precoCreditosStr.isEmpty()) {
                 ctx.status(400).result("Todos os campos de texto do livro são obrigatórios.");
                 return;
             }
-            
+
             double precoCreditos = Double.parseDouble(precoCreditosStr);
 
             if (precoCreditos <= 0) {
                 ctx.status(400).result("O preço em créditos deve ser maior que zero.");
                 return;
             }
-            
+
             livro.setTitulo(titulo);
             livro.setAutor(autor);
             livro.setCondicaoEstado(estadoCondicao);
@@ -167,7 +161,7 @@ public class LivroController {
                     return;
                 }
             }
-            
+
             livroRepository.update(livro);
 
             ctx.redirect("/livro/" + livroId + "?msg=livro_atualizado");
@@ -187,7 +181,7 @@ public class LivroController {
 
         try {
             int livroId = Integer.parseInt(ctx.pathParam("id"));
-            
+
             Livro livro = livroRepository.findById(livroId);
 
             if (livro == null) {
@@ -199,12 +193,12 @@ public class LivroController {
                 ctx.status(403).result("Você não tem permissão para deletar este livro.");
                 return;
             }
-            
+
             if (livro.getStatusLivro() != LivroStatus.DISPONIVEL) {
                 ctx.status(403).result("Não é possível deletar o livro. Ele está envolvido em uma transação (Status: " + livro.getStatusLivro().name() + ").");
                 return;
             }
-            
+
             livroRepository.delete(livro.getId());
 
             ctx.redirect("/perfil?tab=livros&msg=livro_deletado");
@@ -213,27 +207,27 @@ public class LivroController {
             ctx.status(400).result("ID do livro inválido.");
         }
     }
-    
+
     public void listarTodosLivros(Context ctx) {
-    User user = ctx.sessionAttribute("user");
+        User user = ctx.sessionAttribute("user");
 
-    if (user == null){
-        ctx.redirect("/login");
-        return;
-    }
-    
-    try {
-        List<Livro> livrosDisponiveis = livroRepository.findAllAvailable();
+        if (user == null) {
+            ctx.redirect("/login");
+            return;
+        }
 
-        Map<String, Object> model = new HashMap<>();
-        model.put("livrosDisponiveis", livrosDisponiveis);
-        model.put("userLogado", user);
-        
-        ctx.render("index.ftl", model); 
-        
-    } catch (Exception e) {
-        e.printStackTrace();
-        ctx.status(500).result("Erro interno ao carregar a dashboard 😢. Verifique o LivroRepository.");
+        try {
+            List<Livro> livrosDisponiveis = livroRepository.findAllAvailable();
+
+            Map<String, Object> model = new HashMap<>();
+            model.put("livrosDisponiveis", livrosDisponiveis);
+            model.put("userLogado", user);
+
+            ctx.render("index.ftl", model);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            ctx.status(500).result("Erro interno ao carregar a dashboard 😢. Verifique o LivroRepository.");
+        }
     }
-}
 }

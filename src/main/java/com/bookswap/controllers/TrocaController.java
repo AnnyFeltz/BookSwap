@@ -12,7 +12,9 @@ import com.bookswap.repository.TrocaRepository;
 
 import io.javalin.http.Context;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 public class TrocaController {
@@ -31,6 +33,54 @@ public class TrocaController {
         this.livroRepository = new LivroRepository();
     }
 
+    public void mostrarSelecaoLivro(Context ctx) {
+        User userLogado = ctx.sessionAttribute("user");
+
+        if (userLogado == null) {
+            ctx.redirect("/login");
+            return;
+        }
+        
+        String idLivroDesejadoStr = ctx.pathParam("id"); 
+
+        if (idLivroDesejadoStr == null) {
+            ctx.status(400).result("ID do livro desejado ausente.");
+            return;
+        }
+
+        try {
+            int idLivroDesejado = Integer.parseInt(idLivroDesejadoStr);
+            
+            Livro livroDesejado = livroRepository.findById(idLivroDesejado);
+
+            if (livroDesejado == null) {
+                ctx.status(404).result("Livro de destino não encontrado.");
+                return;
+            }
+            
+            if (livroDesejado.getIdUsuario() == userLogado.getId()) {
+                 ctx.status(400).result("Este é um dos seus livros. Use a tela de perfil para gerenciar.");
+                 return;
+            }
+
+            List<Livro> meusLivrosDisponiveis = livroRepository.findAvailableByUserId(userLogado.getId());
+            
+            Map<String, Object> model = new HashMap<>();
+            model.put("livroDesejado", livroDesejado);
+            model.put("meusLivros", meusLivrosDisponiveis); 
+            model.put("userLogado", userLogado);
+            
+            ctx.render("selecao_troca.ftl", model); 
+            
+        } catch (NumberFormatException e) {
+            ctx.status(400).result("ID do livro inválido.");
+        } catch (RuntimeException e) {
+            e.printStackTrace();
+            ctx.status(500).result("Erro interno ao carregar a seleção de troca: " + e.getMessage());
+        }
+    }
+
+
     public void iniciarTroca(Context ctx) {
         User userOfertante = ctx.sessionAttribute("user");
         
@@ -39,7 +89,7 @@ public class TrocaController {
             return;
         }
 
-        String idLivroStr = ctx.pathParam("idLivro");
+        String idLivroStr = ctx.pathParam("idLivro"); 
         String idLivroOfertadoStr = ctx.formParam("idLivroOfertado");
 
         if (idLivroStr == null || idLivroOfertadoStr == null || idLivroStr.isEmpty() || idLivroOfertadoStr.isEmpty()) {
@@ -76,7 +126,7 @@ public class TrocaController {
 
         if (livroDestino.getStatusLivro() != LivroStatus.DISPONIVEL || livroOfertado.getStatusLivro() != LivroStatus.DISPONIVEL) {
              ctx.status(400).result("Um ou ambos os livros não estão disponíveis para troca.");
-            return;
+             return;
         }
 
         Troca novaTroca = new Troca(userOfertante.getId(), livroDestino.getIdUsuario());
@@ -232,9 +282,6 @@ public class TrocaController {
         
         DetalheTroca detalheLivroOfertado = detalhes.get(0); 
 
-        detalheLivroOfertado.setStatusLivro(LivroStatus.TROCADO); 
-        detalheTrocaRepository.update(detalheLivroOfertado);
-        
         Livro livroOfertado = livroRepository.findById(detalheLivroOfertado.getIdLivroOfertado());
         if (livroOfertado != null) {
             livroOfertado.setIdUsuario(troca.getIdUsuarioRecebendo());
@@ -290,16 +337,14 @@ public class TrocaController {
         
         List<DetalheTroca> detalhes = detalheTrocaRepository.findByTrocaId(idTroca);
         for (DetalheTroca detalhe : detalhes) {
-            detalhe.setStatusLivro(LivroStatus.DISPONIVEL); 
-            detalheTrocaRepository.update(detalhe);
-            
+
             Livro livro = livroRepository.findById(detalhe.getIdLivroOfertado());
             if (livro != null) {
                 livro.setStatusLivro(LivroStatus.DISPONIVEL);
                 livroRepository.update(livro);
             }
         }
-
+        
         ctx.redirect("/perfil?tab=trocas&msg=troca_cancelada");
     }
 }

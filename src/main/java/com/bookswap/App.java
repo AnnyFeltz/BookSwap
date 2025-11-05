@@ -46,7 +46,6 @@ public class App {
         UserController userController = new UserController();
         LivroController livroController = new LivroController();
         TrocaController trocaController = new TrocaController();
-        
 
         app.get("/register", ctx -> ctx.render("register.ftl"));
         app.get("/login", ctx -> ctx.render("login.ftl"));
@@ -59,9 +58,9 @@ public class App {
         app.post("/perfil/update", userController::atualizarPerfil);
         app.post("/perfil/delete", userController::deletarConta);
         app.post("/perfil/upload-foto", userController::uploadFotoPerfil);
-        
+
         app.get("/perfil/senha", ctx -> ctx.render("mudarSenha.ftl"));
-        app.post("/perfil/senha", userController::atualizarSenha); 
+        app.post("/perfil/senha", userController::atualizarSenha);
 
         app.get("/livros", livroController::listarTodosLivros);
 
@@ -70,16 +69,17 @@ public class App {
         app.get("/livro/cadastrar", ctx -> ctx.render("criar_livro.ftl"));
         app.post("/livro/cadastrar", livroController::cadastrarLivro);
         app.get("/livro/{id}", livroController::verLivro);
-        
-        app.get("/livro/editar/{id}", ctx -> ctx.render("editarLivro.ftl")); 
-        app.post("/livro/editar/{id}", livroController::editarLivro); 
+
+        app.get("/livro/editar/{id}", ctx -> ctx.render("editarLivro.ftl"));
+        app.post("/livro/editar/{id}", livroController::editarLivro);
         app.post("/livro/deletar/{id}", livroController::deletarLivro);
 
-        app.post("/troca/iniciar/{idLivro}", trocaController::iniciarTroca);
-        
-        app.post("/troca/aceitar/{idTroca}", trocaController::aceitarTroca); 
-        app.post("/troca/recusar/{idTroca}", trocaController::recusarTroca); 
-        app.post("/troca/confirmar/{idTroca}", trocaController::confirmarRecebimento); 
-        app.post("/troca/cancelar/{idTroca}", trocaController::cancelarTroca); 
+        app.get("/livroPraTroca/{id}", livroController::verLivro); 
+        app.post("/troca/iniciar/{idLivro}", new TrocaController()::iniciarTroca);
+
+        app.post("/troca/aceitar/{idTroca}", trocaController::aceitarTroca);
+        app.post("/troca/recusar/{idTroca}", trocaController::recusarTroca);
+        app.post("/troca/confirmar/{idTroca}", trocaController::confirmarRecebimento);
+        app.post("/troca/cancelar/{idTroca}", trocaController::cancelarTroca);
     }
 }

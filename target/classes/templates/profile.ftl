@@ -97,7 +97,26 @@
                 <div id="meus-livros" class="tab-content">
                     <h3>Livros que você está oferecendo para troca:</h3>
                     <div class="book-grid profile-book-grid">
-                    
+                        <#if livrosPraTroca?? &&  livrosPraTroca?has_content>
+                                <#list livrosPraTroca as livro>
+                                    <div class="book-card">
+                                        <div class="book-cover">
+                                            <#assign fotoUrl = livro.fotoCapa!>
+                                            <img src="${fotoUrl?has_content?then(fotoUrl, '/static/img/default-profile.png')}" alt="Capa do livro ${livro.titulo?html}">
+                                        </div>
+                                        
+                                        <div class="book-info">
+                                            <h4 class="book-title">${livro.titulo?html}</h4>
+                                            <p class="book-author">${livro.autor?html}</p>
+                                        </div>
+                                    </div>
+                                </#list>
+                            <#else>
+                                <div class="empty-state">
+                                    <h4>Você ainda não adicionou livros.</h4>
+                                    <p>Clique <a href="/livro/cadastrar">aqui</a> para começar!</p>
+                                </div>
+                            </#if>
                         </div>
                 </div>
 

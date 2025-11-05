@@ -44,10 +44,10 @@
     <div class="book-grid">
       <#if livrosDisponiveis?? && livrosDisponiveis?has_content>
         <#list livrosDisponiveis as livro>
-          <a href="/livro/${livro.id}" class="book-card-link">
+          <a href="/livroPraTroca/${livro.id}" class="book-card-link">
             <div class="book-cover">
               <#assign fotoUrl = livro.fotoCapa!>
-              <img src="${fotoUrl?has_content?then(fotoUrl, '/static/img/A_Menina.jpg')}" 
+              <img src="${fotoUrl?has_content?then(fotoUrl, '/static/img/default-profile.png')}" 
                    alt="Capa do livro ${livro.titulo?html}">
               <div class="bookmark <#if livro.statusLivro == 'EM_TROCA'>saved</#if>"></div> 
             </div>
