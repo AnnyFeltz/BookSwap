@@ -6,6 +6,7 @@ import com.bookswap.dao.LivroDao;
 import com.bookswap.models.Livro;
 
 public class LivroRepository implements ILivroRepository {
+    
     private final LivroDao livroDao;
 
     public LivroRepository() {
@@ -28,6 +29,11 @@ public class LivroRepository implements ILivroRepository {
     }
 
     @Override
+    public List<Livro> findAllAvailable() {
+        return livroDao.findAllAvailable();
+    }
+
+    @Override
     public void save(Livro livro) {
         livroDao.save(livro);
     }
@@ -40,10 +46,5 @@ public class LivroRepository implements ILivroRepository {
     @Override
     public void delete(int id) {
         livroDao.delete(id);
-    }
-
-    @Override
-    public List<Livro> findAllAvailable() {
-        return livroDao.findAllAvailable();
     }
 }

@@ -209,7 +209,7 @@ CREATE TABLE registros_moderacao_bs (
 CREATE TABLE creditos_bs (
     idUsuario INT NOT NULL PRIMARY KEY,
     
-    saldo_atual VARCHAR(45) NOT NULL,
+    saldo_atual DOUBLE NOT NULL,
     
     FOREIGN KEY (idUsuario) 
         REFERENCES usuarios_bs(idUsuario)
@@ -257,9 +257,9 @@ CREATE TABLE transacoes_bs (
     
     tipo enum('CARTAO_DEBITO', 'CARTAO_CREDITO', 'PIX', 'BOLETO', 'SALDO_CREDITOS') NOT NULL,
     
-    valor_creditos VARCHAR(45) NOT NULL, 
+    valor_creditos DOUBLE NOT NULL, 
     data_transacao DATE NOT NULL,
-    origem_descricao VARCHAR(45) NOT NULL,
+    origem_descricao TEXT() NOT NULL,
     nome_pacote_compra VARCHAR(255) NULL, 
     
     FOREIGN KEY (idUsuario) 
@@ -272,7 +272,7 @@ CREATE TABLE detalhes_troca_bs (
     idTroca INT NOT NULL, 
     idLivro_ofertado INT NULL,  
     
-    credito_ofertados VARCHAR(45) NULL, 
+    credito_ofertados DOUBLE NULL, 
     status_livro VARCHAR(45) NOT NULL,
     
     FOREIGN KEY (idTroca) 

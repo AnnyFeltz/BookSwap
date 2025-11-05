@@ -32,6 +32,11 @@ public class UserRepository implements IUserRepository{
     }
 
     @Override
+    public void updateSenha(int id, String novaSenha) {
+        userDao.updateSenha(id, novaSenha);
+    }
+
+    @Override
     public void delete(int id) {
         userDao.delete(id);
     }

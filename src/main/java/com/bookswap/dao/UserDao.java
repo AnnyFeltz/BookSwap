@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
+import java.sql.Types;
 
 import com.bookswap.database.DatabaseConnection;
 import com.bookswap.models.User;
@@ -96,8 +97,9 @@ public class UserDao implements IUserRepository {
             stmt.setString(i++, user.getRole().name()); 
             stmt.setString(i++, user.getStatus().name());
             
-            stmt.setString(i++, user.getFotoPerfil()); 
-            stmt.setString(i++, user.getLocalizacao()); 
+            // Tratamento de Nulos
+            stmt.setObject(i++, user.getFotoPerfil(), Types.VARCHAR); 
+            stmt.setObject(i++, user.getLocalizacao(), Types.VARCHAR); 
 
             stmt.setTimestamp(i++, Timestamp.valueOf(user.getDataRegistro())); 
             
@@ -127,12 +129,29 @@ public class UserDao implements IUserRepository {
             stmt.setString(i++, user.getRole().name());
             stmt.setString(i++, user.getStatus().name());
             
-            stmt.setString(i++, user.getFotoPerfil()); 
-            stmt.setString(i++, user.getLocalizacao());
+            // Tratamento de Nulos
+            stmt.setObject(i++, user.getFotoPerfil(), Types.VARCHAR); 
+            stmt.setObject(i++, user.getLocalizacao(), Types.VARCHAR); 
             
             stmt.setInt(i++, user.getId()); 
             stmt.executeUpdate();
 
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    @Override
+    public void updateSenha(int id, String novaSenha) {
+        String sql = "UPDATE " + TABLE_NAME + " SET senha = ? WHERE idUsuario = ?";
+        
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
+            
+            stmt.setString(1, novaSenha); 
+            
+            stmt.executeUpdate();
+            
         } catch (SQLException e) {
             e.printStackTrace();
         }

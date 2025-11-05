@@ -11,6 +11,7 @@ import com.bookswap.repository.UserRepository;
 
 import io.javalin.http.Context;
 import io.javalin.http.UploadedFile;
+import org.mindrot.jbcrypt.BCrypt; 
 
 public class UserController {
 
@@ -20,7 +21,7 @@ public class UserController {
 
     public UserController() {
         this.userRepository = new UserRepository();
-        this.imgbbService = new ImgbbService();
+        this.imgbbService = new ImgbbService(); 
         this.creditoRepository = new CreditoRepository();
     }
 
@@ -32,16 +33,23 @@ public class UserController {
             return;
         }
 
-        Credito credito = creditoRepository.findByIdUsuario(user.getId());
+        User userAtualizado = userRepository.findById(user.getId()); 
+        if (userAtualizado == null) {
+            ctx.sessionAttribute("user", null);
+            ctx.redirect("/login?msg=sessao_expirada");
+            return;
+        }
+        ctx.sessionAttribute("user", userAtualizado);
+        
+        Credito credito = creditoRepository.findByIdUsuario(userAtualizado.getId());
 
         double saldo = 0.0;
-
         if (credito != null){
             saldo = credito.getSaldoAtual();
         }
 
         Map<String, Object> model = new HashMap<>();
-        model.put("user", user);
+        model.put("user", userAtualizado);
         model.put("saldo_usuario", saldo);
         
         ctx.render("profile.ftl", model);
@@ -63,6 +71,10 @@ public class UserController {
         }
 
         if (novoEmail != null && !novoEmail.isEmpty() && !novoEmail.equals(user.getEmail())) {
+            if (userRepository.findByEmail(novoEmail) != null) {
+                ctx.status(409).result("O novo e-mail já está sendo usado por outro usuário.");
+                return;
+            }
             user.setEmail(novoEmail);
         }
 
@@ -71,6 +83,38 @@ public class UserController {
 
         ctx.redirect("/perfil?msg=conta_atualizada");
     }
+    
+    public void atualizarSenha(Context ctx) {
+        User user = ctx.sessionAttribute("user");
+
+        if (user == null) {
+            ctx.status(401).result("Acesso não autorizado.");
+            return;
+        }
+
+        String senhaAtual = ctx.formParam("senha_atual");
+        String novaSenha = ctx.formParam("nova_senha");
+
+        if (senhaAtual == null || senhaAtual.isEmpty() || novaSenha == null || novaSenha.isEmpty()) {
+            ctx.status(400).result("Preencha todos os campos de senha.");
+            return;
+        }
+
+        if (!BCrypt.checkpw(senhaAtual, user.getSenha())) {
+            ctx.status(403).result("A senha atual fornecida está incorreta.");
+            return;
+        }
+        
+        String hashedNovaSenha = BCrypt.hashpw(novaSenha, BCrypt.gensalt());
+        
+        userRepository.updateSenha(user.getId(), hashedNovaSenha);
+        
+        user.setSenha(hashedNovaSenha); 
+        ctx.sessionAttribute("user", user);
+
+        ctx.redirect("/perfil?msg=senha_atualizada");
+    }
+
 
     public void deletarConta(Context ctx) {
         User user = ctx.sessionAttribute("user");

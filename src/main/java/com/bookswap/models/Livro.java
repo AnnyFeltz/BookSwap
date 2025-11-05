@@ -49,8 +49,8 @@ public class Livro {
         return idUsuario;
     }
 
-    public void setIdUsuario(int idUsuario) {
-        this.idUsuario = idUsuario;
+    public void setIdUsuario(int idUsuarioProprietario) {
+        this.idUsuario = idUsuarioProprietario;
     }
 
     public String getTitulo() {

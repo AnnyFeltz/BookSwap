@@ -7,5 +7,6 @@ public interface IUserRepository {
     User findByEmail(String email);
     void save(User user);
     void update(User user);
+    void updateSenha(int id, String novaSenha); 
     void delete(int id);
 }
