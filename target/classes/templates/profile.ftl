@@ -29,11 +29,11 @@
             <div class="user-info-section">
                 <div class="profile-pic">
                     <#assign fotoUrl=user.fotoPerfil!>
-                    <#if fotoUrl?has_content>
-                        <img src="${fotoUrl}" alt="Foto de Perfil">
-                    <#else>
-                        <img src="/static/img/default-profile.png" alt="Foto Padrão">
-                    </#if>
+                        <#if fotoUrl?has_content>
+                            <img src="${fotoUrl}" alt="Foto de Perfil">
+                            <#else>
+                                <img src="/static/img/default-profile.png" alt="Foto Padrão">
+                        </#if>
                 </div>
                 <div class="user-details">
                     <h1>${user.nome?html}!</h1>
@@ -109,8 +109,8 @@
                                 <div class="book-card">
                                     <div class="book-cover">
                                         <#assign fotoUrl=livro.fotoCapa!>
-                                        <img src="${fotoUrl?has_content?then(fotoUrl, '/static/img/default-profile.png')}"
-                                            alt="Capa do livro ${livro.titulo?html}">
+                                            <img src="${fotoUrl?has_content?then(fotoUrl, '/static/img/default-profile.png')}"
+                                                alt="Capa do livro ${livro.titulo?html}">
                                     </div>
 
                                     <div class="book-info">
@@ -119,11 +119,11 @@
                                     </div>
                                 </div>
                             </#list>
-                        <#else>
-                            <div class="empty-state">
-                                <h4>Você ainda não adicionou livros.</h4>
-                                <p>Clique <a href="/livro/cadastrar">aqui</a> para começar!</p>
-                            </div>
+                            <#else>
+                                <div class="empty-state">
+                                    <h4>Você ainda não adicionou livros.</h4>
+                                    <p>Clique <a href="/livro/cadastrar">aqui</a> para começar!</p>
+                                </div>
                         </#if>
                     </div>
                 </div>
@@ -140,18 +140,26 @@
                                     <p><strong>Solicitante:</strong> ${troca.idUsuarioOfertando}</p>
                                     <p><strong>Status:</strong> ${troca.statusTroca}</p>
 
-                                    <form method="POST" action="/troca/aceitar/${troca.id}" style="display:inline;">
-                                        <button type="submit" class="btn-primary">Aceitar</button>
-                                    </form>
+                                    <#-- Lógica de exibição: Apenas o Recebedor da Oferta (dono do livro desejado) vê os
+                                        botões de ação -->
+                                        <#if troca.idUsuarioRecebendo==user.id>
+                                            <form method="POST" action="/troca/aceitar/${troca.id}"
+                                                style="display:inline;">
+                                                <button type="submit" class="btn-primary">Aceitar</button>
+                                            </form>
 
-                                    <form method="POST" action="/troca/recusar/${troca.id}" style="display:inline;">
-                                        <button type="submit" class="btn-danger">Recusar</button>
-                                    </form>
+                                            <form method="POST" action="/troca/recusar/${troca.id}"
+                                                style="display:inline;">
+                                                <button type="submit" class="btn-danger">Recusar</button>
+                                            </form>
+                                            <#else>
+                                                <span class="action-pending">Aguardando Sua Resposta...</span>
+                                        </#if>
                                 </li>
                             </#list>
                         </ul>
-                    <#else>
-                        <p>Nenhuma troca pendente no momento.</p>
+                        <#else>
+                            <p>Nenhuma troca pendente no momento.</p>
                     </#if>
 
                     <#if trocasHistorico?? && trocasHistorico?has_content>
@@ -160,10 +168,10 @@
                             <#list trocasHistorico as troca>
                                 <li class="trade-item">
                                     <p><strong>Parceiro:</strong>
-                                        <#if troca.idUsuarioOfertando == user.id>
+                                        <#if troca.idUsuarioOfertando==user.id>
                                             ${troca.idUsuarioRecebendo}
-                                        <#else>
-                                            ${troca.idUsuarioOfertando}
+                                            <#else>
+                                                ${troca.idUsuarioOfertando}
                                         </#if>
                                     </p>
                                     <p><strong>Status:</strong> ${troca.statusTroca}</p>
