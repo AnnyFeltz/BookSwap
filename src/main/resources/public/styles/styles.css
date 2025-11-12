@@ -9,6 +9,21 @@
     --sombra-card-hover: 0 6px 16px rgba(0, 0, 0, 0.12);
 }
 
+/*
+ * Regras movidas da view de Detalhes do Livro (book_detail)
+ * Elas usam variáveis do Bootstrap e classes específicas,
+ * devendo ser adicionadas ao seu arquivo styles.css.
+ */
+
+/* Variáveis de Cores (Substituição de Cores do Bootstrap) */
+:root {
+    --bs-primary: #38a169; /* Verde BookSwap (Substitui o primary do Bootstrap) */
+    --bs-success: #48bb78; /* Verde Sucesso */
+    --bs-info: #3182ce; /* Azul Info */
+    --bs-danger: #e53e3e; /* Vermelho Erro */
+    --bs-warning: #f6ad55; /* Laranja Alerta */
+}
+
 /* JUNTADO: * do styles.css, login e registro */
 * {
     margin: 0;
@@ -265,6 +280,16 @@ body.login-or-register-page { /* Crie uma classe no <body> para estas páginas *
     box-shadow: 0 8px 20px rgba(0,0,0,0.15);
     text-align: center;
     position: relative;
+
+    /* Estilos do card movido da view, sobrescreve o fundo e reconfigura o box-shadow */
+    border: none;
+    border-radius: 1rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    overflow: hidden;
+    background-color: var(--cor-surface); /* Garante que os cards de detalhe usem o branco */
+    max-width: none; /* Remove limitação de largura do card para Detalhes */
+    margin-top: 0; /* Remove a margem superior específica de login/registro */
+    padding: 0; /* O padding será gerenciado pelo p-4 do Bootstrap */
 }
 
 /* JUNTADO: .logo-icon de login e registro */
@@ -688,6 +713,54 @@ body.login-or-register-page { /* Crie uma classe no <body> para estas páginas *
 .btn-reject:hover { background-color: #c82333; }
 
 /* --- SEÇÃO LIVROS (Detalhes) --- */
+
+/* Estilo do Header Específico para esta página (caso tenha sido sobrescrito em outro lugar) */
+.site-header .navbar {
+    background-color: var(--bs-primary) !important;
+    border-bottom: 5px solid #2f855a;
+}
+
+/* Estilo do Footer */
+.site-footer {
+    border-top: 1px solid #e2e8f0;
+    color: #4a5568;
+}
+
+/* Estilo da capa do livro nos detalhes (sobrescreve o estilo da capa do grid) */
+.book-cover {
+    height: 400px;
+    width: 100%;
+    object-fit: cover;
+    border-radius: 0.75rem;
+    transition: transform 0.3s ease;
+}
+
+.book-cover:hover {
+    transform: scale(1.02);
+}
+
+/* Destaque de Créditos */
+.credit-price {
+    background: linear-gradient(90deg, #48bb78, #38a169);
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 0.5rem;
+    display: inline-block;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Estilo do modal (adaptação para B5) */
+.modal-dialog {
+    max-width: 500px;
+}
+.modal-header {
+    border-bottom: 1px solid #e2e8f0;
+}
+.modal-footer {
+    border-top: none;
+}
+
+/* Regras que parecem não ter sido usadas ou que foram substituídas por classes do Bootstrap */
 .details-card{
     background-color: var(--cor-surface);
     border-radius: 12px;
