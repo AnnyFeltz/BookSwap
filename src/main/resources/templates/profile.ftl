@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -27,7 +28,7 @@
             </div>
             <div class="user-info-section">
                 <div class="profile-pic">
-                    <#assign fotoUrl = user.fotoPerfil!>
+                    <#assign fotoUrl=user.fotoPerfil!>
                     <#if fotoUrl?has_content>
                         <img src="${fotoUrl}" alt="Foto de Perfil">
                     <#else>
@@ -50,6 +51,7 @@
             </div>
         </div>
 
+        <!-- Formulário de atualização -->
         <input type="checkbox" id="toggle-update" class="hidden-toggle">
         <div class="update-form-wrapper">
             <div class="update-form-container">
@@ -58,32 +60,35 @@
                     <label for="nome">Novo Nome:</label>
                     <input type="text" id="nome" name="nome" placeholder="Seu novo nome" value="${user.nome?html}">
                     <label for="email">Novo E-mail:</label>
-                    <input type="email" id="email" name="email" placeholder="Seu novo e-mail" value="${user.email?html}">
+                    <input type="email" id="email" name="email" placeholder="Seu novo e-mail"
+                        value="${user.email?html}">
                     <button type="submit" class="btn-primary">Salvar Alterações</button>
                 </form>
             </div>
         </div>
 
+        <!-- Upload de foto -->
         <input type="checkbox" id="toggle-photo" class="hidden-toggle">
         <div class="upload-form-wrapper">
             <div class="update-form-container upload-photo-container">
                 <form method="POST" action="/perfil/upload-foto" class="upload-form" enctype="multipart/form-data">
                     <h4>Trocar Foto de Perfil</h4>
-                    
+
                     <div class="photo-upload-preview">
-                        <img id="preview-foto" 
-                             src="${fotoUrl?has_content?then(fotoUrl, '/static/img/default-profile.png')}" 
-                             alt="Pré-visualização da Foto">
+                        <img id="preview-foto"
+                            src="${fotoUrl?has_content?then(fotoUrl, '/static/img/default-profile.png')}"
+                            alt="Pré-visualização da Foto">
                     </div>
 
                     <label for="foto">Escolha a Imagem:</label>
                     <input type="file" id="foto" name="foto" accept="image/*" required onchange="previewImagem(event)">
-                    
+
                     <button type="submit" class="btn-primary">Fazer Upload</button>
                 </form>
             </div>
         </div>
 
+        <!-- Abas -->
         <div class="profile-tabs-container">
             <input type="radio" name="profile-tabs" id="tab1" class="hidden-toggle" checked>
             <input type="radio" name="profile-tabs" id="tab2" class="hidden-toggle">
@@ -94,35 +99,78 @@
             </div>
 
             <div class="tab-content-wrapper">
+                <!-- ABA 1 -->
                 <div id="meus-livros" class="tab-content">
                     <h3>Livros que você está oferecendo para troca:</h3>
+                    <br>
                     <div class="book-grid profile-book-grid">
-                        <#if livrosPraTroca?? &&  livrosPraTroca?has_content>
-                                <#list livrosPraTroca as livro>
-                                    <div class="book-card">
-                                        <div class="book-cover">
-                                            <#assign fotoUrl = livro.fotoCapa!>
-                                            <img src="${fotoUrl?has_content?then(fotoUrl, '/static/img/default-profile.png')}" alt="Capa do livro ${livro.titulo?html}">
-                                        </div>
-                                        
-                                        <div class="book-info">
-                                            <h4 class="book-title">${livro.titulo?html}</h4>
-                                            <p class="book-author">${livro.autor?html}</p>
-                                        </div>
+                        <#if livrosPraTroca?? && livrosPraTroca?has_content>
+                            <#list livrosPraTroca as livro>
+                                <div class="book-card">
+                                    <div class="book-cover">
+                                        <#assign fotoUrl=livro.fotoCapa!>
+                                        <img src="${fotoUrl?has_content?then(fotoUrl, '/static/img/default-profile.png')}"
+                                            alt="Capa do livro ${livro.titulo?html}">
                                     </div>
-                                </#list>
-                            <#else>
-                                <div class="empty-state">
-                                    <h4>Você ainda não adicionou livros.</h4>
-                                    <p>Clique <a href="/livro/cadastrar">aqui</a> para começar!</p>
-                                </div>
-                            </#if>
-                        </div>
 
+                                    <div class="book-info">
+                                        <h4 class="book-title">${livro.titulo?html}</h4>
+                                        <p class="book-author">${livro.autor?html}</p>
+                                    </div>
+                                </div>
+                            </#list>
+                        <#else>
+                            <div class="empty-state">
+                                <h4>Você ainda não adicionou livros.</h4>
+                                <p>Clique <a href="/livro/cadastrar">aqui</a> para começar!</p>
+                            </div>
+                        </#if>
+                    </div>
+                </div>
+
+                <!-- ABA 2 -->
                 <div id="minhas-trocas" class="tab-content">
-                    <h3>Histórico de Trocas</h3>
-                    <ul class="trade-list">
+                    <h3>Minhas Trocas</h3>
+
+                    <#if trocasPendentes?? && trocasPendentes?has_content>
+                        <h4>Trocas Pendentes</h4>
+                        <ul class="trade-list">
+                            <#list trocasPendentes as troca>
+                                <li class="trade-item">
+                                    <p><strong>Solicitante:</strong> ${troca.idUsuarioOfertando}</p>
+                                    <p><strong>Status:</strong> ${troca.statusTroca}</p>
+
+                                    <form method="POST" action="/troca/aceitar/${troca.id}" style="display:inline;">
+                                        <button type="submit" class="btn-primary">Aceitar</button>
+                                    </form>
+
+                                    <form method="POST" action="/troca/recusar/${troca.id}" style="display:inline;">
+                                        <button type="submit" class="btn-danger">Recusar</button>
+                                    </form>
+                                </li>
+                            </#list>
                         </ul>
+                    <#else>
+                        <p>Nenhuma troca pendente no momento.</p>
+                    </#if>
+
+                    <#if trocasHistorico?? && trocasHistorico?has_content>
+                        <h4>Histórico de Trocas</h4>
+                        <ul class="trade-list">
+                            <#list trocasHistorico as troca>
+                                <li class="trade-item">
+                                    <p><strong>Parceiro:</strong>
+                                        <#if troca.idUsuarioOfertando == user.id>
+                                            ${troca.idUsuarioRecebendo}
+                                        <#else>
+                                            ${troca.idUsuarioOfertando}
+                                        </#if>
+                                    </p>
+                                    <p><strong>Status:</strong> ${troca.statusTroca}</p>
+                                </li>
+                            </#list>
+                        </ul>
+                    </#if>
                 </div>
             </div>
         </div>
@@ -140,7 +188,7 @@
             if (input.files && input.files[0]) {
                 const reader = new FileReader();
 
-                reader.onload = function(e) {
+                reader.onload = function (e) {
                     preview.src = e.target.result;
                 }
 
@@ -148,7 +196,6 @@
             }
         }
     </script>
-
 </body>
 
 </html>

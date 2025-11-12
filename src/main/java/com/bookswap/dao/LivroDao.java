@@ -13,7 +13,6 @@ import com.bookswap.models.Livro;
 import com.bookswap.models.subModels.LivroStatus;
 import com.bookswap.repository.ILivroRepository;
 
-
 public class LivroDao implements ILivroRepository {
 
     private static final String TABLE_NAME = "livros_bs";
@@ -33,9 +32,7 @@ public class LivroDao implements ILivroRepository {
         livro.setCondicaoEstado(rs.getString("condicao_estado"));
         livro.setPrecoCreditos(rs.getDouble("preco_creditos"));
         livro.setFotoCapa(rs.getString("foto_capa"));
-
         livro.setStatusLivro(LivroStatus.valueOf(rs.getString("status_livro").toUpperCase()));
-
         return livro;
     }
 
@@ -43,7 +40,8 @@ public class LivroDao implements ILivroRepository {
     public void save(Livro livro) {
         String sql = "INSERT INTO " + TABLE_NAME + " (" + INSERT_FIELDS + ") VALUES (?,?,?,?,?,?,?)";
 
-        try (Connection conn = DatabaseConnection.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)) {
 
             int i = 1;
             stmt.setInt(i++, livro.getIdUsuario());
@@ -52,9 +50,7 @@ public class LivroDao implements ILivroRepository {
             stmt.setString(i++, livro.getCondicaoEstado());
             stmt.setDouble(i++, livro.getPrecoCreditos());
             stmt.setString(i++, livro.getFotoCapa());
-
             stmt.setString(i++, livro.getStatusLivro().name());
-
             stmt.executeUpdate();
 
             try (ResultSet rs = stmt.getGeneratedKeys()) {
@@ -65,14 +61,15 @@ public class LivroDao implements ILivroRepository {
 
         } catch (SQLException e) {
             e.printStackTrace();
-            throw new RuntimeException("Falha ao salvar livro: erro de banco de dados.", e); 
+            throw new RuntimeException("Falha ao salvar livro: erro de banco de dados.", e);
         }
     }
 
     @Override
     public Livro findById(int id) {
         String sql = "SELECT " + SELECT_ALL_FIELDS + " FROM " + TABLE_NAME + " WHERE idLivro = ?";
-        try (Connection conn = DatabaseConnection.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setInt(1, id);
             ResultSet rs = stmt.executeQuery();
@@ -92,7 +89,8 @@ public class LivroDao implements ILivroRepository {
     public List<Livro> findByIdUsuario(int idUsuario) {
         List<Livro> livros = new ArrayList<>();
         String sql = "SELECT " + SELECT_ALL_FIELDS + " FROM " + TABLE_NAME + " WHERE idUsuario_proprietario = ?";
-        try (Connection conn = DatabaseConnection.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setInt(1, idUsuario);
             ResultSet rs = stmt.executeQuery();
@@ -113,10 +111,10 @@ public class LivroDao implements ILivroRepository {
         List<Livro> livros = new ArrayList<>();
         String sql = "SELECT " + SELECT_ALL_FIELDS + " FROM " + TABLE_NAME + " WHERE titulo LIKE ?";
 
-        try (Connection conn = DatabaseConnection.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setString(1, "%" + titulo + "%");
-
             ResultSet rs = stmt.executeQuery();
 
             while (rs.next()) {
@@ -135,7 +133,8 @@ public class LivroDao implements ILivroRepository {
         List<Livro> livros = new ArrayList<>();
         String sql = "SELECT " + SELECT_ALL_FIELDS + " FROM " + TABLE_NAME + " WHERE status_livro = ?";
 
-        try (Connection conn = DatabaseConnection.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setString(1, LivroStatus.DISPONIVEL.name());
             ResultSet rs = stmt.executeQuery();
@@ -146,7 +145,7 @@ public class LivroDao implements ILivroRepository {
 
         } catch (SQLException e) {
             e.printStackTrace();
-            throw new RuntimeException("Falha ao buscar livros disponíveis: erro de banco de dados.", e); 
+            throw new RuntimeException("Falha ao buscar livros disponíveis: erro de banco de dados.", e);
         }
         return livros;
     }
@@ -154,15 +153,14 @@ public class LivroDao implements ILivroRepository {
     @Override
     public List<Livro> findAvailableByUserId(int idUsuario) {
         List<Livro> livros = new ArrayList<>();
-        String sql = "SELECT " + SELECT_ALL_FIELDS + " FROM " + TABLE_NAME 
-                        + " WHERE idUsuario_proprietario = ? AND status_livro = ?";
-        
-        try (Connection conn = DatabaseConnection.getConnection(); 
+        String sql = "SELECT " + SELECT_ALL_FIELDS + " FROM " + TABLE_NAME
+                + " WHERE idUsuario_proprietario = ? AND status_livro = ?";
+
+        try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setInt(1, idUsuario);
-            stmt.setString(2, LivroStatus.DISPONIVEL.name()); 
-            
+            stmt.setString(2, LivroStatus.DISPONIVEL.name());
             ResultSet rs = stmt.executeQuery();
 
             while (rs.next()) {
@@ -178,19 +176,24 @@ public class LivroDao implements ILivroRepository {
 
     @Override
     public void update(Livro livro) {
-        String sql = "UPDATE " + TABLE_NAME + " SET titulo = ?, autor = ?, condicao_estado = ?, preco_creditos = ?, foto_capa = ?, status_livro = ? WHERE idLivro = ?";
+        // 🔥 Correção: agora também atualiza o idUsuario_proprietario
+        String sql = "UPDATE " + TABLE_NAME 
+                   + " SET idUsuario_proprietario = ?, titulo = ?, autor = ?, condicao_estado = ?, preco_creditos = ?, foto_capa = ?, status_livro = ? "
+                   + "WHERE idLivro = ?";
 
-        try (Connection conn = DatabaseConnection.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             int i = 1;
+            stmt.setInt(i++, livro.getIdUsuario());
             stmt.setString(i++, livro.getTitulo());
             stmt.setString(i++, livro.getAutor());
             stmt.setString(i++, livro.getCondicaoEstado());
             stmt.setDouble(i++, livro.getPrecoCreditos());
             stmt.setString(i++, livro.getFotoCapa());
             stmt.setString(i++, livro.getStatusLivro().name());
-
             stmt.setInt(i++, livro.getId());
+
             stmt.executeUpdate();
 
         } catch (SQLException e) {
@@ -202,7 +205,8 @@ public class LivroDao implements ILivroRepository {
     @Override
     public void delete(int id) {
         String sql = "DELETE FROM " + TABLE_NAME + " WHERE idLivro = ?";
-        try (Connection conn = DatabaseConnection.getConnection(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
             stmt.setInt(1, id);
             stmt.executeUpdate();
         } catch (SQLException e) {

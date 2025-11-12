@@ -5,29 +5,33 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.mindrot.jbcrypt.BCrypt;
+
 import com.bookswap.models.Credito;
-import com.bookswap.models.User;
 import com.bookswap.models.Livro;
+import com.bookswap.models.Troca;
+import com.bookswap.models.User;
 import com.bookswap.repository.CreditoRepository;
-import com.bookswap.repository.UserRepository;
 import com.bookswap.repository.LivroRepository;
+import com.bookswap.repository.TrocaRepository;
+import com.bookswap.repository.UserRepository;
 
 import io.javalin.http.Context;
-import io.javalin.http.UploadedFile;
-import org.mindrot.jbcrypt.BCrypt; 
-
+import io.javalin.http.UploadedFile; 
 public class UserController {
 
     private final UserRepository userRepository;
     private final ImgbbService imgbbService;
     private final CreditoRepository creditoRepository;
     private final LivroRepository livroRepository;
+    private final TrocaRepository trocaRepository;
 
     public UserController() {
         this.userRepository = new UserRepository();
         this.imgbbService = new ImgbbService(); 
         this.creditoRepository = new CreditoRepository();
         this.livroRepository = new LivroRepository();
+        this.trocaRepository = new TrocaRepository();
     }
 
     public void verPerfil(Context ctx) {
@@ -55,10 +59,16 @@ public class UserController {
 
         List<Livro> livrosDoUsuario = livroRepository.findAvailableByUserId(userAtualizado.getId());
 
+        List<Troca> trocasPendentes = trocaRepository.findPendentesParaUsuario(userAtualizado.getId());
+        List<Troca> trocasHistorico = trocaRepository.findHistoricoTrocas(userAtualizado.getId());
+
         Map<String, Object> model = new HashMap<>();
         model.put("user", userAtualizado);
         model.put("saldo_usuario", saldo);
         model.put("livrosPraTroca", livrosDoUsuario);
+
+        model.put("trocasPendentes", trocasPendentes);
+        model.put("trocasHistorico", trocasHistorico);
         
         ctx.render("profile.ftl", model);
     }

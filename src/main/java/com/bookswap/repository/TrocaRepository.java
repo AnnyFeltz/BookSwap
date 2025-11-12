@@ -6,7 +6,7 @@ import com.bookswap.dao.TrocaDao;
 import com.bookswap.models.Troca;
 
 public class TrocaRepository implements ITrocaRepository {
-    
+
     private final TrocaDao trocaDao;
 
     public TrocaRepository() {
@@ -47,4 +47,13 @@ public class TrocaRepository implements ITrocaRepository {
     public List<Troca> findTrocasPendentes(int idUsuario) {
         return trocaDao.findTrocasPendentes(idUsuario);
     }
+
+    public List<Troca> findPendentesParaUsuario(int idUsuario) {
+        return trocaDao.findPendentesParaUsuario(idUsuario);
+    }
+
+    public List<Troca> findHistoricoTrocas(int idUsuario) {
+        return trocaDao.findHistoricoTrocas(idUsuario);
+    }
+
 }

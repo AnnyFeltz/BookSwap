@@ -6,6 +6,7 @@ public class DetalheTroca {
     private int id;
     private int idTroca;
     private int idLivroOfertado;
+    private int idLivroDesejado;
     private double creditosOfertados;
     private LivroStatus statusLivro;
     
@@ -13,24 +14,27 @@ public class DetalheTroca {
         // (U.U )...zzz
     }
 
-    public DetalheTroca(int id, int idTroca, int idLivroOfertado, double creditosOfertados, LivroStatus statusLivro) {
+    public DetalheTroca(int id, int idTroca, int idLivroOfertado, int idLivroDesejado, double creditosOfertados, LivroStatus statusLivro) {
         this.id = id;
         this.idTroca = idTroca;
         this.idLivroOfertado = idLivroOfertado;
+        this.idLivroDesejado = idLivroDesejado;
         this.creditosOfertados = creditosOfertados;
         this.statusLivro = statusLivro;
     }
 
-    public DetalheTroca(int idTroca, int idLivroOferta, double creditosOfertados, LivroStatus statusLivro) {
+    public DetalheTroca(int idTroca, int idLivroOfertado, int idLivroDesejado, double creditosOfertados, LivroStatus statusLivro) {
         this.idTroca = idTroca;
+        this.idLivroDesejado = idLivroDesejado;
         this.idLivroOfertado = idLivroOfertado;
         this.creditosOfertados = creditosOfertados;
         this.statusLivro = statusLivro;
     }
 
-    public DetalheTroca(int idTroca, int idLivroOfertado) {
+    public DetalheTroca(int idTroca, int idLivroOfertado, int idLivroDesejado) {
         this.idTroca = idTroca;
         this.idLivroOfertado = idLivroOfertado;
+        this.idLivroDesejado = idLivroDesejado;
         this.creditosOfertados = 0.0;
         this.statusLivro = LivroStatus.DISPONIVEL;
     }
@@ -52,6 +56,12 @@ public class DetalheTroca {
     }
     public void setIdLivroOfertado(int idLivroOfertado) {
         this.idLivroOfertado = idLivroOfertado;
+    }
+    public int getIdLivroDesejado() {
+        return idLivroDesejado;
+    }
+    public void setIdLivroDesejado(int idLivroDesejado) {
+        this.idLivroDesejado = idLivroDesejado;
     }
     public double getCreditosOfertados() {
         return creditosOfertados;

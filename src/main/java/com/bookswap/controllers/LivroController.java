@@ -96,8 +96,8 @@ public class LivroController {
             model.put("userLogado", user);
             model.put("isDono", livro.getIdUsuario() == user.getId());
             model.put("creditosUsuario", new CreditoController().getSaldo(user.getId()));
-
             model.put("meusLivrosDisponiveis", meusLivrosDisponiveis);
+            model.put("ctx", ctx); // CORREÇÃO: Adicionando o Context para Freemarker acessar queryParams
 
             ctx.render("livroPraTroca.ftl", model);
 

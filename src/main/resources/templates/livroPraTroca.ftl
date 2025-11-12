@@ -8,7 +8,26 @@
     
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.1/css/all.min.css">
-    <link rel="stylesheet" href="/static/styles/styles.css"> 
+    <link rel="stylesheet" href="/static/styles/styles.css">
+
+    <style>
+        /* 🔧 Garante que o modal fique sempre visível */
+        .modal {
+            z-index: 1055 !important;
+        }
+
+        /* 🔧 Faz o backdrop (fundo escuro) não bloquear cliques */
+        .modal-backdrop {
+            pointer-events: none !important;
+            opacity: 0.3 !important;
+        }
+
+        /* Só pra garantir visual limpo */
+        body.modal-open {
+            overflow: auto !important;
+            padding-right: 0 !important;
+        }
+    </style>
 </head>
 
 <body>
@@ -129,7 +148,7 @@
         </div>
         
         <#if !isDono && livro.statusLivro.name() == "DISPONIVEL">
-            <div class="modal fade" id="modalTroca" tabindex="-1" role="dialog" aria-labelledby="modalTrocaLabel" aria-hidden="true">
+            <div class="modal fade" id="modalTroca" tabindex="-1" role="dialog" aria-labelledby="modalTrocaLabel" aria-hidden="true" data-backdrop="false">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
@@ -160,11 +179,10 @@
                                         <label for="idLivroOfertado">Selecione Seu Livro para Oferta:</label>
                                         <select class="form-control" id="idLivroOfertado" name="idLivroOfertado" required>
                                             <option value="">-- Escolha um de seus livros --</option>
-                                            <#-- A lista agora vem como 'meusLivrosDisponiveis' do LivroController.verLivro -->
                                             <#if meusLivrosDisponiveis?? && (meusLivrosDisponiveis?size > 0)>
                                                 <#list meusLivrosDisponiveis as meuLivro>
                                                     <#if meuLivro.id != livro.id>
-                                                         <option value="${meuLivro.id}">${meuLivro.titulo} (${meuLivro.condicaoEstado})</option>
+                                                        <option value="${meuLivro.id}">${meuLivro.titulo} (${meuLivro.condicaoEstado})</option>
                                                     </#if>
                                                 </#list>
                                             <#else>
@@ -173,7 +191,7 @@
                                         </select>
                                     </div>
                                     
-                                    <button type="submit" class="btn btn-success btn-block mt-3" 
+                                    <button type="submit" class="btn btn-success btn-block mt-3"
                                         <#if meusLivrosDisponiveis?? && (meusLivrosDisponiveis?size > 0) == false>disabled</#if>>
                                         <i class="fas fa-exchange-alt"></i> Iniciar Proposta de Troca
                                     </button>
@@ -185,7 +203,7 @@
             </div>
         </#if>
         
-        </main>
+    </main>
 
     <footer class="site-footer bg-light text-center py-3 mt-5">
         <p>&copy; 2025 BookSwap. Todos os direitos reservados.</p>
