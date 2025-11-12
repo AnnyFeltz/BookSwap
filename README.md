@@ -271,6 +271,7 @@ CREATE TABLE detalhes_troca_bs (
     
     idTroca INT NOT NULL, 
     idLivro_ofertado INT NULL,  
+    idLivro_desejado INT NULL, 
     
     credito_ofertados DOUBLE NULL, 
     status_livro VARCHAR(45) NOT NULL,

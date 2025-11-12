@@ -1,182 +1,182 @@
-package com.bookswap.controllers;
+    package com.bookswap.controllers;
 
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+    import java.io.IOException;
+    import java.util.HashMap;
+    import java.util.List;
+    import java.util.Map;
 
-import org.mindrot.jbcrypt.BCrypt;
+    import org.mindrot.jbcrypt.BCrypt;
 
-import com.bookswap.models.Credito;
-import com.bookswap.models.Livro;
-import com.bookswap.models.Troca;
-import com.bookswap.models.User;
-import com.bookswap.repository.CreditoRepository;
-import com.bookswap.repository.LivroRepository;
-import com.bookswap.repository.TrocaRepository;
-import com.bookswap.repository.UserRepository;
+    import com.bookswap.models.Credito;
+    import com.bookswap.models.Livro;
+    import com.bookswap.models.Troca;
+    import com.bookswap.models.User;
+    import com.bookswap.repository.CreditoRepository;
+    import com.bookswap.repository.LivroRepository;
+    import com.bookswap.repository.TrocaRepository;
+    import com.bookswap.repository.UserRepository;
 
-import io.javalin.http.Context;
-import io.javalin.http.UploadedFile; 
-public class UserController {
+    import io.javalin.http.Context;
+    import io.javalin.http.UploadedFile; 
+    public class UserController {
 
-    private final UserRepository userRepository;
-    private final ImgbbService imgbbService;
-    private final CreditoRepository creditoRepository;
-    private final LivroRepository livroRepository;
-    private final TrocaRepository trocaRepository;
+        private final UserRepository userRepository;
+        private final ImgbbService imgbbService;
+        private final CreditoRepository creditoRepository;
+        private final LivroRepository livroRepository;
+        private final TrocaRepository trocaRepository;
 
-    public UserController() {
-        this.userRepository = new UserRepository();
-        this.imgbbService = new ImgbbService(); 
-        this.creditoRepository = new CreditoRepository();
-        this.livroRepository = new LivroRepository();
-        this.trocaRepository = new TrocaRepository();
-    }
-
-    public void verPerfil(Context ctx) {
-        User user = ctx.sessionAttribute("user");
-
-        if (user == null) {
-            ctx.redirect("/login");
-            return;
+        public UserController() {
+            this.userRepository = new UserRepository();
+            this.imgbbService = new ImgbbService(); 
+            this.creditoRepository = new CreditoRepository();
+            this.livroRepository = new LivroRepository();
+            this.trocaRepository = new TrocaRepository();
         }
 
-        User userAtualizado = userRepository.findById(user.getId()); 
-        if (userAtualizado == null) {
-            ctx.sessionAttribute("user", null);
-            ctx.redirect("/login?msg=sessao_expirada");
-            return;
-        }
-        ctx.sessionAttribute("user", userAtualizado);
-        
-        Credito credito = creditoRepository.findByIdUsuario(userAtualizado.getId());
+        public void verPerfil(Context ctx) {
+            User user = ctx.sessionAttribute("user");
 
-        double saldo = 0.0;
-        if (credito != null){
-            saldo = credito.getSaldoAtual();
-        }
-
-        List<Livro> livrosDoUsuario = livroRepository.findAvailableByUserId(userAtualizado.getId());
-
-        List<Troca> trocasPendentes = trocaRepository.findPendentesParaUsuario(userAtualizado.getId());
-        List<Troca> trocasHistorico = trocaRepository.findHistoricoTrocas(userAtualizado.getId());
-
-        Map<String, Object> model = new HashMap<>();
-        model.put("user", userAtualizado);
-        model.put("saldo_usuario", saldo);
-        model.put("livrosPraTroca", livrosDoUsuario);
-
-        model.put("trocasPendentes", trocasPendentes);
-        model.put("trocasHistorico", trocasHistorico);
-        
-        ctx.render("profile.ftl", model);
-    }
-
-    public void atualizarPerfil(Context ctx) {
-        User user = ctx.sessionAttribute("user");
-
-        if (user == null) {
-            ctx.status(401).result("Acesso não autorizado. Faça login novamente");
-            return;
-        }
-
-        String novoNome = ctx.formParam("nome");
-        String novoEmail = ctx.formParam("email");
-        
-        if (novoNome != null && !novoNome.isEmpty()) {
-            user.setNome(novoNome);
-        }
-
-        if (novoEmail != null && !novoEmail.isEmpty() && !novoEmail.equals(user.getEmail())) {
-            if (userRepository.findByEmail(novoEmail) != null) {
-                ctx.status(409).result("O novo e-mail já está sendo usado por outro usuário.");
+            if (user == null) {
+                ctx.redirect("/login");
                 return;
             }
-            user.setEmail(novoEmail);
-        }
 
-        userRepository.update(user);
-        ctx.sessionAttribute("user", user); 
-
-        ctx.redirect("/perfil?msg=conta_atualizada");
-    }
-    
-    public void atualizarSenha(Context ctx) {
-        User user = ctx.sessionAttribute("user");
-
-        if (user == null) {
-            ctx.status(401).result("Acesso não autorizado.");
-            return;
-        }
-
-        String senhaAtual = ctx.formParam("senha_atual");
-        String novaSenha = ctx.formParam("nova_senha");
-
-        if (senhaAtual == null || senhaAtual.isEmpty() || novaSenha == null || novaSenha.isEmpty()) {
-            ctx.status(400).result("Preencha todos os campos de senha.");
-            return;
-        }
-
-        if (!BCrypt.checkpw(senhaAtual, user.getSenha())) {
-            ctx.status(403).result("A senha atual fornecida está incorreta.");
-            return;
-        }
-        
-        String hashedNovaSenha = BCrypt.hashpw(novaSenha, BCrypt.gensalt());
-        
-        userRepository.updateSenha(user.getId(), hashedNovaSenha);
-        
-        user.setSenha(hashedNovaSenha); 
-        ctx.sessionAttribute("user", user);
-
-        ctx.redirect("/perfil?msg=senha_atualizada");
-    }
-
-
-    public void deletarConta(Context ctx) {
-        User user = ctx.sessionAttribute("user");
-
-        if(user == null) {
-            ctx.status(401).result("Não autorizado");
-            return;
-        }
-
-        userRepository.delete(user.getId());
-
-        ctx.sessionAttribute("user", null); 
-
-        ctx.redirect("/?msg=conta_deletada");
-    }
-    
-    public void uploadFotoPerfil(Context ctx) {
-        User user = ctx.sessionAttribute("user");
-
-        if (user == null) {
-            ctx.status(401).result("Acesso não autorizado. Faça login novamente.");
-            return;
-        }
-
-        UploadedFile file = ctx.uploadedFile("foto");
-
-        if (file == null || file.contentType() == null || !file.contentType().startsWith("image")) {
-            ctx.status(400).result("Nenhum arquivo de imagem válido enviado.");
-            return;
-        }
-
-        try {
-            String newUrl = imgbbService.uploadImage(file);
+            User userAtualizado = userRepository.findById(user.getId()); 
+            if (userAtualizado == null) {
+                ctx.sessionAttribute("user", null);
+                ctx.redirect("/login?msg=sessao_expirada");
+                return;
+            }
+            ctx.sessionAttribute("user", userAtualizado);
             
-            user.setFotoPerfil(newUrl);
+            Credito credito = creditoRepository.findByIdUsuario(userAtualizado.getId());
+
+            double saldo = 0.0;
+            if (credito != null){
+                saldo = credito.getSaldoAtual();
+            }
+
+            List<Livro> livrosDoUsuario = livroRepository.findAvailableByUserId(userAtualizado.getId());
+
+            List<Troca> trocasPendentes = trocaRepository.findPendentesParaUsuario(userAtualizado.getId());
+            List<Troca> trocasHistorico = trocaRepository.findHistoricoTrocas(userAtualizado.getId());
+
+            Map<String, Object> model = new HashMap<>();
+            model.put("user", userAtualizado);
+            model.put("saldo_usuario", saldo);
+            model.put("livrosPraTroca", livrosDoUsuario);
+
+            model.put("trocasPendentes", trocasPendentes);
+            model.put("trocasHistorico", trocasHistorico);
             
+            ctx.render("profile.ftl", model);
+        }
+
+        public void atualizarPerfil(Context ctx) {
+            User user = ctx.sessionAttribute("user");
+
+            if (user == null) {
+                ctx.status(401).result("Acesso não autorizado. Faça login novamente");
+                return;
+            }
+
+            String novoNome = ctx.formParam("nome");
+            String novoEmail = ctx.formParam("email");
+            
+            if (novoNome != null && !novoNome.isEmpty()) {
+                user.setNome(novoNome);
+            }
+
+            if (novoEmail != null && !novoEmail.isEmpty() && !novoEmail.equals(user.getEmail())) {
+                if (userRepository.findByEmail(novoEmail) != null) {
+                    ctx.status(409).result("O novo e-mail já está sendo usado por outro usuário.");
+                    return;
+                }
+                user.setEmail(novoEmail);
+            }
+
             userRepository.update(user);
+            ctx.sessionAttribute("user", user); 
+
+            ctx.redirect("/perfil?msg=conta_atualizada");
+        }
+        
+        public void atualizarSenha(Context ctx) {
+            User user = ctx.sessionAttribute("user");
+
+            if (user == null) {
+                ctx.status(401).result("Acesso não autorizado.");
+                return;
+            }
+
+            String senhaAtual = ctx.formParam("senha_atual");
+            String novaSenha = ctx.formParam("nova_senha");
+
+            if (senhaAtual == null || senhaAtual.isEmpty() || novaSenha == null || novaSenha.isEmpty()) {
+                ctx.status(400).result("Preencha todos os campos de senha.");
+                return;
+            }
+
+            if (!BCrypt.checkpw(senhaAtual, user.getSenha())) {
+                ctx.status(403).result("A senha atual fornecida está incorreta.");
+                return;
+            }
+            
+            String hashedNovaSenha = BCrypt.hashpw(novaSenha, BCrypt.gensalt());
+            
+            userRepository.updateSenha(user.getId(), hashedNovaSenha);
+            
+            user.setSenha(hashedNovaSenha); 
             ctx.sessionAttribute("user", user);
 
-            ctx.redirect("/perfil?msg=foto_atualizada");
+            ctx.redirect("/perfil?msg=senha_atualizada");
+        }
 
-        } catch (IOException e) {
-            e.printStackTrace();
-            ctx.status(500).result("Erro ao fazer upload da foto: " + e.getMessage());
+
+        public void deletarConta(Context ctx) {
+            User user = ctx.sessionAttribute("user");
+
+            if(user == null) {
+                ctx.status(401).result("Não autorizado");
+                return;
+            }
+
+            userRepository.delete(user.getId());
+
+            ctx.sessionAttribute("user", null); 
+
+            ctx.redirect("/?msg=conta_deletada");
+        }
+        
+        public void uploadFotoPerfil(Context ctx) {
+            User user = ctx.sessionAttribute("user");
+
+            if (user == null) {
+                ctx.status(401).result("Acesso não autorizado. Faça login novamente.");
+                return;
+            }
+
+            UploadedFile file = ctx.uploadedFile("foto");
+
+            if (file == null || file.contentType() == null || !file.contentType().startsWith("image")) {
+                ctx.status(400).result("Nenhum arquivo de imagem válido enviado.");
+                return;
+            }
+
+            try {
+                String newUrl = imgbbService.uploadImage(file);
+                
+                user.setFotoPerfil(newUrl);
+                
+                userRepository.update(user);
+                ctx.sessionAttribute("user", user);
+
+                ctx.redirect("/perfil?msg=foto_atualizada");
+
+            } catch (IOException e) {
+                e.printStackTrace();
+                ctx.status(500).result("Erro ao fazer upload da foto: " + e.getMessage());
+            }
         }
     }
-}

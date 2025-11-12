@@ -176,7 +176,8 @@ public class LivroDao implements ILivroRepository {
 
     @Override
     public void update(Livro livro) {
-        // 🔥 Correção: agora também atualiza o idUsuario_proprietario
+        // ✅ CORREÇÃO APLICADA: Inclui a atualização do idUsuario_proprietario (o novo dono)
+        // e status_livro (de volta para DISPONIVEL)
         String sql = "UPDATE " + TABLE_NAME 
                    + " SET idUsuario_proprietario = ?, titulo = ?, autor = ?, condicao_estado = ?, preco_creditos = ?, foto_capa = ?, status_livro = ? "
                    + "WHERE idLivro = ?";
@@ -185,13 +186,13 @@ public class LivroDao implements ILivroRepository {
              PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             int i = 1;
-            stmt.setInt(i++, livro.getIdUsuario());
+            stmt.setInt(i++, livro.getIdUsuario()); // 👈 NOVO DONO
             stmt.setString(i++, livro.getTitulo());
             stmt.setString(i++, livro.getAutor());
             stmt.setString(i++, livro.getCondicaoEstado());
             stmt.setDouble(i++, livro.getPrecoCreditos());
             stmt.setString(i++, livro.getFotoCapa());
-            stmt.setString(i++, livro.getStatusLivro().name());
+            stmt.setString(i++, livro.getStatusLivro().name()); // 👈 NOVO STATUS
             stmt.setInt(i++, livro.getId());
 
             stmt.executeUpdate();
